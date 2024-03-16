@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.2.3</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	
+	<groupId>com.github.kyleryxn</groupId>
+	<artifactId>snapsnatch</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>snapsnatch</name>
+	<description>
+		SnapSnatch is an advanced, multithreaded web crawler designed specifically for efficient and rapid
+		image extraction from websites. Built on the robust and scalable Spring Boot framework, this project leverages
+		the power of Java concurrency with virtual threads and Spring's intuitive programming model to provide a
+		high-performance solution for automated image collection. Whether you're building a dataset for machine
+		learning, archiving, or content aggregation, SnapSnatch offers a customizable and easy-to-use tool
+		that can navigate and extract images from complex web structures. Its multithreaded nature ensures maximum
+		utilization of system resources, significantly reducing the time required to crawl large websites while
+		maintaining a lightweight footprint. Perfect for developers and researchers alike, SnapSnatch
+		streamlines the process of gathering visual content from the web with precision and speed.
+	</description>
+	
+	<developers>
+		<developer>
+			<id>kyleryxn</id>
+			<name>Kyle Schoenhardt</name>
+			<url>https://github.com/kyleryxn</url>
+			<roles>
+				<role>creator</role>
+				<role>developer</role>
+				<role>tester</role>
+			</roles>
+		</developer>
+	</developers>
+	
+	<prerequisites>
+		<maven>3.9</maven>
+	</prerequisites>
+	
+	<properties>
+		<java.version>21</java.version>
+		<mockito.version>5.10.0</mockito.version>
+	</properties>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.17.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents.client5</groupId>
+			<artifactId>httpclient5</artifactId>
+			<version>5.3.1</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-logging</artifactId>
+					<groupId>commons-logging</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents.core5</groupId>
+			<artifactId>httpcore5</artifactId>
+			<version>5.2.4</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-logging</artifactId>
+					<groupId>commons-logging</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-json</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.skyscreamer</groupId>
+					<artifactId>jsonassert</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>net.minidev</groupId>
+					<artifactId>json-smart</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.xmlunit</groupId>
+					<artifactId>xmlunit-core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.jayway.jsonpath</groupId>
+					<artifactId>json-path</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.wiremock</groupId>
+			<artifactId>wiremock-standalone</artifactId>
+			<version>3.4.2</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>3.3.1</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.11.0</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>3.6.0</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>3.1.1</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-install-plugin</artifactId>
+				<version>3.1.1</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.3.1</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.1.2</version>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.pitest</groupId>
+				<artifactId>pitest-maven</artifactId>
+				<version>1.15.8</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.pitest</groupId>
+						<artifactId>pitest-junit5-plugin</artifactId>
+						<version>1.2.1</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<targetClasses>
+						<class>com.github.kyleryxn.snapsnatch.*</class>
+					</targetClasses>
+					<targetTests>
+						<testClass>com.github.kyleryxn.snapsnatch.*</testClass>
+					</targetTests>
+					<excludedClasses>
+						<class>com.github.kyleryxn.snapsnatch.SnapsnatchApplication</class>
+						<class>com.github.kyleryxn.snapsnatch.common.LoggingConfig</class>
+						<class>com.github.kyleryxn.snapsnatch.crawler.content.ElementExtractor</class>
+						<class>com.github.kyleryxn.snapsnatch.crawler.content.ContentParser</class>
+					</excludedClasses>
+					<excludedTestClasses>
+						<testClass>com.github.kyleryxn.snapsnatch.SnapsnatchApplicationTests</testClass>
+					</excludedTestClasses>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
