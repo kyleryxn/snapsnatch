@@ -2,32 +2,15 @@ name: Auto-merge Dependabot PRs
 
 on:
   pull_request_target:
-    types: [opened, synchronize, reopened]
-
-permissions:
-  contents: write
-  pull-requests: write
+    types: [opened, synchronize, reopened, labeled, unlabeled]
 
 jobs:
   auto-merge:
     runs-on: ubuntu-latest
     if: github.actor == 'dependabot[bot]'
     steps:
-      - name: Check out code
-        uses: actions/checkout@v3
       - name: Auto-merge Dependabot PRs
-        uses: actions/github-script@v6
+        uses: ahmadnassri/action-dependabot-auto-merge@v2
         with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
-            const { context } = require('@actions/github');
-            const pullRequest = context.payload.pull_request;
-            const isMinorOrPatch = ['minor', 'patch'].some(type => pullRequest.title.includes(type));
-
-            if (isMinorOrPatch) {
-              await github.rest.pulls.merge({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: pullRequest.number
-              });
-            }
+          target: major
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
