@@ -5,12 +5,15 @@ on:
     types: [opened, synchronize, reopened, labeled, unlabeled]
 
 jobs:
-  auto-merge:
+  review-dependabot-pr:
     runs-on: ubuntu-latest
-    if: github.actor == 'dependabot[bot]'
+    if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' }}
     steps:
-      - name: Auto-merge Dependabot PRs
-        uses: ahmadnassri/action-dependabot-auto-merge@v2
-        with:
-          target: major
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
+      - name: Dependabot metadata
+        id: dependabot-metadata
+        uses: dependabot/fetch-metadata@v1.3.1
+      - name: Enable auto-merge for Dependabot PRs
+        run: gh pr merge --auto --merge "$PR_URL"
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
