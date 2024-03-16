@@ -1,6 +1,6 @@
-package com.github.kyleryxn.snapsnatch.crawler.extract;
+package com.github.kyleryxn.snapsnatch.crawler.content;
 
-import com.github.kyleryxn.snapsnatch.model.Image;
+import com.github.kyleryxn.snapsnatch.image.model.Image;
 import org.jsoup.select.Elements;
 
 import java.util.HashSet;

@@ -1,12 +1,10 @@
 package com.github.kyleryxn.snapsnatch.crawler;
 
-import com.github.kyleryxn.snapsnatch.crawler.extract.ImageExtractor;
-import com.github.kyleryxn.snapsnatch.crawler.extract.LinkExtractor;
-import com.github.kyleryxn.snapsnatch.crawler.parse.HTMLParser;
-import com.github.kyleryxn.snapsnatch.crawler.parse.RobotsTxtParser;
-import com.github.kyleryxn.snapsnatch.http.HttpClientFactory;
-import com.github.kyleryxn.snapsnatch.model.Image;
-import com.github.kyleryxn.snapsnatch.service.WebCrawlerService;
+import com.github.kyleryxn.snapsnatch.crawler.content.ImageExtractor;
+import com.github.kyleryxn.snapsnatch.crawler.content.LinkExtractor;
+import com.github.kyleryxn.snapsnatch.crawler.content.HTMLParser;
+import com.github.kyleryxn.snapsnatch.crawler.content.RobotsTxtParser;
+import com.github.kyleryxn.snapsnatch.image.model.Image;
 import org.junit.jupiter.api.Test;
 
 import java.util.Set;
@@ -25,7 +23,7 @@ public class WebCrawlerTest {
 
         ConcurrentMap<String, Set<Image>> images = new ConcurrentHashMap<>(webCrawlerService.getImages());
         ConcurrentMap<String, Boolean> visited = new ConcurrentHashMap<>(webCrawlerService.getVisited());
-        Set<String> pics = images.entrySet().stream().flatMap(e -> e.getValue().stream()).map(Image::getUrl).collect(Collectors.toSet());
+        Set<String> pics = images.entrySet().stream().flatMap(e -> e.getValue().stream()).map(Image::getURL).collect(Collectors.toSet());
         pics.forEach(System.out::println);
     }
 

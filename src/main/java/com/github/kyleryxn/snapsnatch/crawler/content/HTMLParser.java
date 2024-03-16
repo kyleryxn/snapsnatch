@@ -1,10 +1,7 @@
-package com.github.kyleryxn.snapsnatch.crawler.parse;
+package com.github.kyleryxn.snapsnatch.crawler.content;
 
 import com.github.kyleryxn.snapsnatch.crawler.WebParser;
-import com.github.kyleryxn.snapsnatch.crawler.extract.ElementExtractor;
-import com.github.kyleryxn.snapsnatch.crawler.extract.ImageExtractor;
-import com.github.kyleryxn.snapsnatch.crawler.extract.LinkExtractor;
-import com.github.kyleryxn.snapsnatch.model.Image;
+import com.github.kyleryxn.snapsnatch.image.model.Image;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.parser.Parser;

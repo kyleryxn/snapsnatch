@@ -1,8 +1,8 @@
-package com.github.kyleryxn.snapsnatch.crawler.extract;
+package com.github.kyleryxn.snapsnatch.crawler.content;
 
-import com.github.kyleryxn.snapsnatch.factory.*;
-import com.github.kyleryxn.snapsnatch.model.Image;
-import com.github.kyleryxn.snapsnatch.util.ImageURLProcessor;
+import com.github.kyleryxn.snapsnatch.image.factory.*;
+import com.github.kyleryxn.snapsnatch.image.model.Image;
+import com.github.kyleryxn.snapsnatch.crawler.util.ImageURLProcessor;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
@@ -24,11 +24,9 @@ public class ImageExtractor implements ElementExtractor {
         this.processor = new ImageURLProcessor();
 
         factories.put("gif", GIFImageFactory::new);
-        factories.put("jpeg", JPEGImageFactory::new);
-        factories.put("jpg", JPEGImageFactory::new);
+        factories.put("jpeg", JPGImageFactory::new);
         factories.put("png", PNGImageFactory::new);
         factories.put("svg", SVGImageFactory::new);
-        factories.put("webp", WEBPImageFactory::new);
     }
 
     @Override
@@ -54,7 +52,7 @@ public class ImageExtractor implements ElementExtractor {
 
         if (factorySupplier != null) {
             ImageFactory factory = factorySupplier.get();
-            factory.setTag(tag);
+            factory.setImageTag(tag);
             return factory.createImage();
         } else {
             return null;

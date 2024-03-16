@@ -1,9 +1,8 @@
-package com.github.kyleryxn.snapsnatch.service;
+package com.github.kyleryxn.snapsnatch.crawler;
 
-import com.github.kyleryxn.snapsnatch.crawler.WebContentReader;
-import com.github.kyleryxn.snapsnatch.crawler.parse.HTMLParser;
-import com.github.kyleryxn.snapsnatch.crawler.parse.RobotsTxtParser;
-import com.github.kyleryxn.snapsnatch.model.Image;
+import com.github.kyleryxn.snapsnatch.crawler.content.HTMLParser;
+import com.github.kyleryxn.snapsnatch.crawler.content.RobotsTxtParser;
+import com.github.kyleryxn.snapsnatch.image.model.Image;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

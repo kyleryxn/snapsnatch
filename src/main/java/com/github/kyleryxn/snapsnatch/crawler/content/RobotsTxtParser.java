@@ -1,4 +1,4 @@
-package com.github.kyleryxn.snapsnatch.crawler.parse;
+package com.github.kyleryxn.snapsnatch.crawler.content;
 
 import com.github.kyleryxn.snapsnatch.crawler.WebParser;
 import org.slf4j.Logger;
@@ -33,7 +33,7 @@ public class RobotsTxtParser implements WebParser {
         final String DISALLOW_PREFIX = "disallow:";
 
         if (content == null || content.isBlank()) {
-            LOGGER.warn("Content passed to parse method is empty.");
+            LOGGER.warn("Content passed to util method is empty.");
             return;
         }
 

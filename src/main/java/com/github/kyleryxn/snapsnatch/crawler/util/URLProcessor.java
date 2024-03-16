@@ -1,4 +1,4 @@
-package com.github.kyleryxn.snapsnatch.util;
+package com.github.kyleryxn.snapsnatch.crawler.util;
 
 import java.util.List;
 

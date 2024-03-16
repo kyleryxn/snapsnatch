@@ -1,6 +1,6 @@
-package com.github.kyleryxn.snapsnatch.crawler.extract;
+package com.github.kyleryxn.snapsnatch.crawler.content;
 
-import com.github.kyleryxn.snapsnatch.util.URLProcessor;
+import com.github.kyleryxn.snapsnatch.crawler.util.URLProcessor;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
 
