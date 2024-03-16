@@ -1,4 +1,4 @@
-package com.github.kyleryxn.snapsnatch.http;
+package com.github.kyleryxn.snapsnatch.crawler;
 
 import com.github.kyleryxn.snapsnatch.common.LoggingConfig;
 import org.apache.hc.client5.http.config.TlsConfig;
@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class HttpClientFactory {
+class HttpClientFactory {
     private final int maxConnectionsTotal;
     private final int maxConnectionsPerRoute;
     private final PoolingHttpClientConnectionManager connectionManager;
