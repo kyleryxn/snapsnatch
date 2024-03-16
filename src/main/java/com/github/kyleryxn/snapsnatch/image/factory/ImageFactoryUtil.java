@@ -6,7 +6,7 @@ import java.util.stream.StreamSupport;
 
 public class ImageFactoryUtil {
 
-    public String parseName(Element imgTag) {
+    public String parseDescription(Element imgTag) {
         return imgTag.attr("alt").isBlank() ? "None" : imgTag.attr("alt").trim();
     }
 

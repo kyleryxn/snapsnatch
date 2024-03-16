@@ -5,7 +5,7 @@ import org.jsoup.nodes.Element;
 
 public interface ImageFactory {
 
-    void setTag(Element imgTag);
+    void setImageTag(Element imgTag);
 
     Image createImage();
 

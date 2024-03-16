@@ -13,13 +13,13 @@ public class GIFImageFactory implements ImageFactory {
     }
 
     @Override
-    public void setTag(Element imgTag) {
+    public void setImageTag(Element imgTag) {
         this.imgTag = imgTag;
     }
 
     @Override
     public Image createImage() {
-        String name = factoryUtil.parseName(imgTag);
+        String name = factoryUtil.parseDescription(imgTag);
         boolean isLogo = factoryUtil.parseLogo(imgTag);
         String url = factoryUtil.parseURL(imgTag);
 
