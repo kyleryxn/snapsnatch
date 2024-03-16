@@ -42,7 +42,7 @@ Thank you to the following contributors for their contributions to this release:
 
 ### Changelog
 
-Please check the [Changelog](../../CHANGELOG.md) for a detailed list of changes.
+Please check the [CHANGELOG](./CHANGELOG.md) for a detailed list of changes.
 
 ### Installation
 
@@ -62,4 +62,4 @@ If you encounter any issues or need assistance, please create an issue here.
 
 ### License
 
-This project is licensed under [License Name]. Please see the LICENSE file for more details.
+This project is licensed under [License Name]. Please see the [LICENSE](./LICENSE) file for more details.
