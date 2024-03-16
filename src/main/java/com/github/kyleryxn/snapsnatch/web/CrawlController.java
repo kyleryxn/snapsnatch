@@ -1,6 +1,6 @@
-package com.github.kyleryxn.snapsnatch.controller;
+package com.github.kyleryxn.snapsnatch.web;
 
-import com.github.kyleryxn.snapsnatch.service.WebCrawlerService;
+import com.github.kyleryxn.snapsnatch.crawler.WebCrawlerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
