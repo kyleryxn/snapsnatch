@@ -1,17 +1,33 @@
-name: Dependabot auto-merge
-on: pull_request
+name: Auto-merge Dependabot PRs
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
 
 permissions:
   contents: write
   pull-requests: write
 
 jobs:
-  dependabot:
+  auto-merge:
     runs-on: ubuntu-latest
-    if: ${{ github.actor == 'dependabot[bot]' && github.event_name == 'pull_request'}} # Detect that the PR author is dependabot
+    if: github.actor == 'dependabot[bot]'
     steps:
-      - name: Enable auto-merge for Dependabot PRs
-        run: gh pr merge --auto --merge "$PR_URL" # Use GitHub CLI to automatically merge the PR
-        env:
-          PR_URL: ${{github.event.pull_request.html_url}}
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - name: Check out code
+        uses: actions/checkout@v3
+      - name: Auto-merge Dependabot PRs
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const { context } = require('@actions/github');
+            const pullRequest = context.payload.pull_request;
+            const isMinorOrPatch = ['minor', 'patch'].some(type => pullRequest.title.includes(type));
+
+            if (isMinorOrPatch) {
+              await github.rest.pulls.merge({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: pullRequest.number
+              });
+            }
