@@ -1,4 +1,4 @@
-package com.github.kyleryxn.snapsnatch.model;
+package com.github.kyleryxn.snapsnatch.image.model;
 
 public class JPGImage extends Image {
     private final String name;
@@ -12,7 +12,7 @@ public class JPGImage extends Image {
     }
 
     @Override
-    public String getName() {
+    public String getDescription() {
         return name;
     }
 
@@ -22,13 +22,28 @@ public class JPGImage extends Image {
     }
 
     @Override
-    public String getUrl() {
+    public String getURL() {
         return url;
     }
 
     @Override
-    public String getType() {
-        return "JPG";
+    public int hashCode() {
+        return getURL() != null ? getURL().hashCode() : 0;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
+
+        JPGImage img = (JPGImage) obj;
+
+        return getURL() != null ? getURL().equalsIgnoreCase(img.getURL()) : img.getURL() == null;
     }
 
     @Override
@@ -42,7 +57,7 @@ public class JPGImage extends Image {
 
     @Override
     public int compareTo(Image o) {
-        return name.compareTo(o.getName());
+        return name.compareTo(o.getDescription());
     }
 
 }

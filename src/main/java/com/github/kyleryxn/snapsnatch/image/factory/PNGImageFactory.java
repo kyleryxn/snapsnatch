@@ -1,7 +1,7 @@
-package com.github.kyleryxn.snapsnatch.factory;
+package com.github.kyleryxn.snapsnatch.image.factory;
 
-import com.github.kyleryxn.snapsnatch.model.Image;
-import com.github.kyleryxn.snapsnatch.model.PNGImage;
+import com.github.kyleryxn.snapsnatch.image.model.Image;
+import com.github.kyleryxn.snapsnatch.image.model.PNGImage;
 import org.jsoup.nodes.Element;
 
 public class PNGImageFactory implements ImageFactory {

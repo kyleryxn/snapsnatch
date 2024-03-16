@@ -1,4 +1,4 @@
-package com.github.kyleryxn.snapsnatch.factory;
+package com.github.kyleryxn.snapsnatch.image.factory;
 
 import org.jsoup.nodes.Element;
 
