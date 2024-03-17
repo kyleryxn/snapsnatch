@@ -19,7 +19,7 @@ public class CrawlController {
     @PostMapping("/crawl")
     public void startCrawling(@RequestParam String url) {
         // Create WebCrawlerService instance with the provided URL
-        crawlerService.setStartUrl(url);
+        crawlerService.setBaseURL(url);
         // Call the crawl method of WebCrawlerService
         crawlerService.crawl();
     }

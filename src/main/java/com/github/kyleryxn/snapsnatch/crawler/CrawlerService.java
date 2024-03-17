@@ -19,7 +19,7 @@ public class CrawlerService {
     private final ParserService parserService;
     private final ConcurrentMap<String, Boolean> visited;
     private final ConcurrentMap<String, Set<Image>> images;
-    private String startUrl;
+    private String baseURL;
     private boolean crawlFlag;
 
     private long startTime;
@@ -41,8 +41,8 @@ public class CrawlerService {
         return visited;
     }
 
-    public void setStartUrl(String startUrl) {
-        this.startUrl = startUrl;
+    public void setBaseURL(String baseURL) {
+        this.baseURL = baseURL;
     }
 
     public void crawl() {
@@ -56,14 +56,14 @@ public class CrawlerService {
             return;
 
         try (ExecutorService executor = Executors.newThreadPerTaskExecutor(threadFactory)) {
-            crawlPage(executor, startUrl);
+            crawlPage(executor, baseURL);
         }
 
         logCrawlSpeed();
     }
 
     private void readRobotsTxt() {
-        String robotsTxtContent = webContentReader.readContent(startUrl + "robots.txt");
+        String robotsTxtContent = webContentReader.readContent(baseURL + "robots.txt");
         Map<String, List<String>> robotsTxt = parserService.parseRobotsTxtAndGetDirectives(robotsTxtContent);
         List<String> allUserAgents = robotsTxt.get("*");
 
@@ -75,7 +75,7 @@ public class CrawlerService {
                     .stream()
                     .filter(entry -> entry.getKey().equals("*"))
                     .flatMap(entry -> entry.getValue().stream())
-                    .map(link -> startUrl.substring(0, startUrl.lastIndexOf('/')) + link)
+                    .map(link -> baseURL.substring(0, baseURL.lastIndexOf('/')) + link)
                     .forEach(link -> visited.putIfAbsent(link, true));
         }
     }
@@ -91,6 +91,7 @@ public class CrawlerService {
 
         String content = webContentReader.readContent(url);
         pageCount.incrementAndGet(); // *
+
         Set<String> urls = parserService.parseHTMLAndGetLinks(content, url);
         Set<Image> imagesOnPage = parserService.parseHTMLAndGetImages(content);
         images.putIfAbsent(url, imagesOnPage);
