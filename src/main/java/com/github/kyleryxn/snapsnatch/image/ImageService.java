@@ -39,7 +39,7 @@ public class ImageService {
     }
 
     private ImageFactory defaultFactory() {
-        return imageFactories.get("default");
+        return imageFactories.get("DEFAULT");
     }
 
 }
