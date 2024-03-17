@@ -3,8 +3,10 @@ package com.github.kyleryxn.snapsnatch.image.factory;
 import com.github.kyleryxn.snapsnatch.image.model.Image;
 import com.github.kyleryxn.snapsnatch.image.model.SVGImage;
 import org.jsoup.nodes.Element;
+import org.springframework.stereotype.Component;
 
-public class SVGImageFactory implements ImageFactory {
+@Component
+class SVGImageFactory implements ImageFactory {
     private final ImageFactoryUtil factoryUtil;
     private Element imgTag;
 

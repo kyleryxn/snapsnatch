@@ -3,8 +3,10 @@ package com.github.kyleryxn.snapsnatch.image.factory;
 import com.github.kyleryxn.snapsnatch.image.model.Image;
 import com.github.kyleryxn.snapsnatch.image.model.JPGImage;
 import org.jsoup.nodes.Element;
+import org.springframework.stereotype.Component;
 
-public class JPGImageFactory implements ImageFactory {
+@Component
+class JPGImageFactory implements ImageFactory {
     private final ImageFactoryUtil factoryUtil;
     private Element imgTag;
 
@@ -28,7 +30,7 @@ public class JPGImageFactory implements ImageFactory {
 
     @Override
     public String getFactoryType() {
-        return "GIF";
+        return "JPG";
     }
 
 }
