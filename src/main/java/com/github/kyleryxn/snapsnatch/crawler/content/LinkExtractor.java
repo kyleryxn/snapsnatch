@@ -32,13 +32,9 @@ class LinkExtractor implements ElementExtractor {
         anchorTags.stream()
                 .map(tag -> tag.attr("href").trim().replaceAll("\\s", "%20"))
                 .map(url -> crawlerUtil.resolveURL(baseURL, url))
-                .filter(crawlerUtil::isValidURL)
-                .filter(url -> !url.isBlank())
-                .forEach(url -> {
-                    if (!crawlerUtil.isDuplicate(url, links)) {
-                        links.add(url);
-                    }
-                });
+                .filter(url -> !url.isBlank() && crawlerUtil.isValidURL(url))
+                .filter(url -> crawlerUtil.isSameDomain(baseURL, url))
+                .forEach(links::add);
 
         return links;
     }
