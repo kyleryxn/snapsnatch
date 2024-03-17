@@ -9,4 +9,6 @@ public interface ImageFactory {
 
     Image createImage();
 
+    String getFactoryType();
+
 }

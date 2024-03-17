@@ -5,6 +5,7 @@ import com.github.kyleryxn.snapsnatch.image.model.Image;
 import org.jsoup.nodes.Element;
 import org.springframework.stereotype.Component;
 
+@Component
 public class DefaultImageFactory implements ImageFactory {
     private final ImageFactoryUtil imageFactoryUtil;
     private Element imageTag;
@@ -25,6 +26,11 @@ public class DefaultImageFactory implements ImageFactory {
         String url = imageFactoryUtil.parseURL(imageTag);
 
         return new DefaultImage(description, isLogo, url);
+    }
+
+    @Override
+    public String getFactoryType() {
+        return null;
     }
 
 }

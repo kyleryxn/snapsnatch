@@ -26,4 +26,9 @@ public class JPGImageFactory implements ImageFactory {
         return new JPGImage(name, isLogo, url);
     }
 
+    @Override
+    public String getFactoryType() {
+        return "GIF";
+    }
+
 }

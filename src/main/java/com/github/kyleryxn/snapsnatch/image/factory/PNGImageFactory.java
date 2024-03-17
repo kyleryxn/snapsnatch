@@ -26,4 +26,9 @@ public class PNGImageFactory implements ImageFactory {
         return new PNGImage(name, isLogo, url);
     }
 
+    @Override
+    public String getFactoryType() {
+        return "PNG";
+    }
+
 }

@@ -26,4 +26,9 @@ public class SVGImageFactory implements ImageFactory {
         return new SVGImage(name, isLogo, url);
     }
 
+    @Override
+    public String getFactoryType() {
+        return "SVG";
+    }
+
 }
