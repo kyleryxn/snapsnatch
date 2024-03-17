@@ -1,7 +1,6 @@
 package com.github.kyleryxn.snapsnatch.crawler;
 
 import com.github.kyleryxn.snapsnatch.crawler.content.ParserService;
-import com.github.kyleryxn.snapsnatch.crawler.content.RobotsTxtParser;
 import com.github.kyleryxn.snapsnatch.image.model.Image;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,18 +14,15 @@ import java.util.concurrent.*;
 @Service
 public class CrawlerService {
     private static final Logger LOGGER = LoggerFactory.getLogger(CrawlerService.class);
-
     private final WebContentReader webContentReader;
-    private final RobotsTxtParser robotsTxtParser;
     private final ParserService parserService;
     private final ConcurrentMap<String, Boolean> visited;
     private final ConcurrentMap<String, Set<Image>> images;
     private String startUrl;
     private boolean crawlFlag;
 
-    public CrawlerService(WebContentReader webContentReader, RobotsTxtParser robotsTxtParser, ParserService parserService) {
+    public CrawlerService(WebContentReader webContentReader, ParserService parserService) {
         this.webContentReader = webContentReader;
-        this.robotsTxtParser = robotsTxtParser;
         this.parserService = parserService;
         this.visited = new ConcurrentHashMap<>();
         this.images = new ConcurrentHashMap<>();
@@ -43,7 +39,6 @@ public class CrawlerService {
 
     public void setStartUrl(String startUrl) {
         this.startUrl = startUrl;
-        //parserService.setBaseURL(startUrl); // Ensure the parser knows the starting URL
     }
 
     public void crawl() {
@@ -60,13 +55,11 @@ public class CrawlerService {
 
     private void readRobotsTxt() {
         String robotsTxtContent = webContentReader.readContent(startUrl + "robots.txt");
-        robotsTxtParser.parse(robotsTxtContent);
-
-        Map<String, List<String>> robotsTxt = robotsTxtParser.getDirectives();
+        Map<String, List<String>> robotsTxt = parserService.parseRobotsTxtAndGetDirectives(robotsTxtContent);
         List<String> allUserAgents = robotsTxt.get("*");
 
         if (allUserAgents != null && allUserAgents.contains("/")) {
-            LOGGER.info("Crawling disallowed by {}robots.txt", startUrl);
+            LOGGER.info("Crawling disallowed by robots.txt");
             crawlFlag = false;
         } else {
             robotsTxt.entrySet()
