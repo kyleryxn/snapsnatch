@@ -1,6 +1,5 @@
 package com.github.kyleryxn.snapsnatch.crawler.content;
 
-import com.github.kyleryxn.snapsnatch.crawler.WebParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -14,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-public class RobotsTxtParser implements WebParser {
+public class RobotsTxtParser implements Parser {
     private static final Logger LOGGER = LoggerFactory.getLogger(RobotsTxtParser.class);
 
     private final Map<String, List<String>> robotsTxt;

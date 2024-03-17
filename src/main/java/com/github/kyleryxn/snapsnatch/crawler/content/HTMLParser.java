@@ -1,10 +1,8 @@
 package com.github.kyleryxn.snapsnatch.crawler.content;
 
-import com.github.kyleryxn.snapsnatch.crawler.WebParser;
 import com.github.kyleryxn.snapsnatch.image.model.Image;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.parser.Parser;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,8 +14,10 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import static org.jsoup.parser.Parser.htmlParser;
+
 @Component
-public class HTMLParser implements WebParser {
+public class HTMLParser implements Parser {
     private final Map<String, ElementExtractor> extractors;
     private final LinkExtractor linkExtractor;
     private final ImageExtractor imageExtractor;
@@ -56,7 +56,7 @@ public class HTMLParser implements WebParser {
 
     @Override
     public void parse(String content) {
-        Document document = Jsoup.parse(content, Parser.htmlParser());
+        Document document = Jsoup.parse(content, htmlParser());
         Elements imgTags = document.select("img[src]");
         Elements anchorTags = document.select("a[href]");
 
