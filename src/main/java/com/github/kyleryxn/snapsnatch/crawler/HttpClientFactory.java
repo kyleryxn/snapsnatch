@@ -22,8 +22,8 @@ class HttpClientFactory {
 
     public HttpClientFactory() {
         LoggingConfig.configure(HttpClientFactory.class); // Prevent console output of logs
-        maxConnectionsTotal = 25;
-        maxConnectionsPerRoute = 15;
+        maxConnectionsTotal = 50;
+        maxConnectionsPerRoute = 35;
         connectionManager = createConnectionManager();
     }
 
