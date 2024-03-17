@@ -20,8 +20,8 @@ class ImageFactoryUtil {
                 });
     }
 
-    public String parseURL(Element imgTag) {
-        String url = imgTag.attr("src");
+    public String parseURL(Element imageTag) {
+        String url = imageTag.attr("src");
 
         if (url.startsWith("//")) {
             url = "https:" + url;
