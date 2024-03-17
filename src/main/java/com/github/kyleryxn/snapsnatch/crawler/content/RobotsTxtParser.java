@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-public class RobotsTxtParser implements Parser {
+class RobotsTxtParser implements Parser {
     private static final Logger LOGGER = LoggerFactory.getLogger(RobotsTxtParser.class);
 
     private final Map<String, List<String>> directives;
