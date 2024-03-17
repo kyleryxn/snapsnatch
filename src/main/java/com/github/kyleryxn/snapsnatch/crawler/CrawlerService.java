@@ -1,11 +1,10 @@
 package com.github.kyleryxn.snapsnatch.crawler;
 
-import com.github.kyleryxn.snapsnatch.crawler.content.HTMLParser;
+import com.github.kyleryxn.snapsnatch.crawler.content.ParserService;
 import com.github.kyleryxn.snapsnatch.crawler.content.RobotsTxtParser;
 import com.github.kyleryxn.snapsnatch.image.model.Image;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,17 +18,16 @@ public class CrawlerService {
 
     private final WebContentReader webContentReader;
     private final RobotsTxtParser robotsTxtParser;
-    private final HTMLParser htmlParser;
+    private final ParserService parserService;
     private final ConcurrentMap<String, Boolean> visited;
     private final ConcurrentMap<String, Set<Image>> images;
     private String startUrl;
     private boolean crawlFlag;
 
-    @Autowired
-    public CrawlerService(WebContentReader webContentReader, RobotsTxtParser robotsTxtParser, HTMLParser htmlParser) {
+    public CrawlerService(WebContentReader webContentReader, RobotsTxtParser robotsTxtParser, ParserService parserService) {
         this.webContentReader = webContentReader;
         this.robotsTxtParser = robotsTxtParser;
-        this.htmlParser = htmlParser;
+        this.parserService = parserService;
         this.visited = new ConcurrentHashMap<>();
         this.images = new ConcurrentHashMap<>();
         crawlFlag = true;
@@ -45,7 +43,7 @@ public class CrawlerService {
 
     public void setStartUrl(String startUrl) {
         this.startUrl = startUrl;
-        htmlParser.setStartURL(startUrl); // Ensure the parser knows the starting URL
+        //parserService.setBaseURL(startUrl); // Ensure the parser knows the starting URL
     }
 
     public void crawl() {
@@ -64,7 +62,7 @@ public class CrawlerService {
         String robotsTxtContent = webContentReader.readContent(startUrl + "robots.txt");
         robotsTxtParser.parse(robotsTxtContent);
 
-        Map<String, List<String>> robotsTxt = robotsTxtParser.getRobotsTxt();
+        Map<String, List<String>> robotsTxt = robotsTxtParser.getDirectives();
         List<String> allUserAgents = robotsTxt.get("*");
 
         if (allUserAgents != null && allUserAgents.contains("/")) {
@@ -90,9 +88,8 @@ public class CrawlerService {
         }
 
         String content = webContentReader.readContent(url);
-        htmlParser.parse(content);
-        Set<String> urls = htmlParser.getLinks();
-        Set<Image> imagesOnPage = htmlParser.getImages();
+        Set<String> urls = parserService.parseHTMLAndGetLinks(content, url);
+        Set<Image> imagesOnPage = parserService.parseHTMLAndGetImages(content);
         images.putIfAbsent(url, imagesOnPage);
 
         for (String link : urls) {

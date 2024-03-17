@@ -9,30 +9,25 @@ import org.springframework.stereotype.Component;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static org.jsoup.parser.Parser.htmlParser;
 
 @Component
-public class HTMLParser implements Parser {
+class HTMLParser implements Parser {
     private final Map<String, ElementExtractor> extractors;
-    private final ElementExtractor linkExtractor;
-    private final ElementExtractor imageExtractor;
     private Set<Image> images;
     private Set<String> links;
-    private String startURL;
+    private String baseURL;
 
     @Autowired
-    public HTMLParser(ElementExtractor imageExtractor, ElementExtractor linkExtractor) {
-        this.linkExtractor = linkExtractor;
-        this.imageExtractor = imageExtractor;
-        extractors = new HashMap<>();
-
-        extractors.put("image", this.imageExtractor);
-        extractors.put("link", this.linkExtractor);
+    public HTMLParser(List<ElementExtractor> extractorsList) {
+        this.extractors = extractorsList.stream()
+                .collect(Collectors.toMap(ElementExtractor::getExtractorType, Function.identity()));
+        images = new HashSet<>();
+        links = new HashSet<>();
     }
 
     public Set<Image> getImages() {
@@ -43,24 +38,29 @@ public class HTMLParser implements Parser {
         return links;
     }
 
-    public void setStartURL(String startURL) {
-        this.startURL = startURL;
-        linkExtractor.setBaseURL(this.startURL);
+    public void setBaseURL(String baseURL) {
+        this.baseURL = baseURL;
+        extractors.get("LinkExtractor").setBaseURL(this.baseURL);
+    }
+
+    @Override
+    public String getContentType() {
+        return Content.HTML.getContentType();
     }
 
     @Override
     public void parse(String content) {
         Document document = Jsoup.parse(content, htmlParser());
-        Elements imgTags = document.select("img[src]");
+        Elements imageTags = document.select("img[src]");
         Elements anchorTags = document.select("a[href]");
 
-        images = extractors.get("image").extractImages(imgTags);
+        images.addAll(extractors.get("ImageExtractor").extractImages(imageTags));
         links = new HashSet<>();
-        links.add(startURL);
+        links.add(baseURL);
 
-        for (String link : extractors.get("link").extractLinks(anchorTags)) {
+        for (String link : extractors.get("LinkExtractor").extractLinks(anchorTags)) {
             if (link.startsWith("/")) {
-                link = startURL.substring(0, startURL.lastIndexOf("/")) + link;
+                link = baseURL.substring(0, baseURL.lastIndexOf("/")) + link;
             }
 
             if (isSameDomain(link)) {
@@ -72,7 +72,7 @@ public class HTMLParser implements Parser {
     private boolean isSameDomain(String url) {
         try {
             URI uri = new URI(url);
-            URI startURI = new URI(startURL);
+            URI startURI = new URI(baseURL);
             return uri.getHost().equalsIgnoreCase(startURI.getHost());
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);

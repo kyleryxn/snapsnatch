@@ -16,14 +16,19 @@ import java.util.Map;
 public class RobotsTxtParser implements Parser {
     private static final Logger LOGGER = LoggerFactory.getLogger(RobotsTxtParser.class);
 
-    private final Map<String, List<String>> robotsTxt;
+    private final Map<String, List<String>> directives;
 
     public RobotsTxtParser() {
-        this.robotsTxt = new HashMap<>();
+        this.directives = new HashMap<>();
     }
 
-    public Map<String, List<String>> getRobotsTxt() {
-        return robotsTxt;
+    public Map<String, List<String>> getDirectives() {
+        return directives;
+    }
+
+    @Override
+    public String getContentType() {
+        return Content.ROBOTS.getContentType();
     }
 
     @Override
@@ -47,10 +52,10 @@ public class RobotsTxtParser implements Parser {
 
                 if (line.toLowerCase().startsWith(USER_AGENT_PREFIX)) {
                     userAgent = line.substring(USER_AGENT_PREFIX.length()).trim();
-                    robotsTxt.putIfAbsent(userAgent, new ArrayList<>());
+                    directives.putIfAbsent(userAgent, new ArrayList<>());
                 } else if (line.toLowerCase().startsWith(DISALLOW_PREFIX)) {
                     String disallow = line.substring(DISALLOW_PREFIX.length()).trim();
-                    robotsTxt.computeIfAbsent(userAgent, k -> new ArrayList<>()).add(disallow);
+                    directives.computeIfAbsent(userAgent, k -> new ArrayList<>()).add(disallow);
                 }
             }
         } catch (IOException e) {
