@@ -14,8 +14,8 @@ import java.util.Set;
 import java.util.concurrent.*;
 
 @Service
-public class WebCrawlerService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(WebCrawlerService.class);
+public class CrawlerService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CrawlerService.class);
 
     private final WebContentReader webContentReader;
     private final RobotsTxtParser robotsTxtParser;
@@ -26,7 +26,7 @@ public class WebCrawlerService {
     private boolean crawlFlag;
 
     @Autowired
-    public WebCrawlerService(WebContentReader webContentReader, RobotsTxtParser robotsTxtParser, HTMLParser htmlParser) {
+    public CrawlerService(WebContentReader webContentReader, RobotsTxtParser robotsTxtParser, HTMLParser htmlParser) {
         this.webContentReader = webContentReader;
         this.robotsTxtParser = robotsTxtParser;
         this.htmlParser = htmlParser;
