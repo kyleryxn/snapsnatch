@@ -19,20 +19,14 @@ import static org.jsoup.parser.Parser.htmlParser;
 @Component
 public class HTMLParser implements Parser {
     private final Map<String, ElementExtractor> extractors;
-    private final LinkExtractor linkExtractor;
-    private final ImageExtractor imageExtractor;
+    private final ElementExtractor linkExtractor;
+    private final ElementExtractor imageExtractor;
     private Set<Image> images;
     private Set<String> links;
     private String startURL;
 
-    public HTMLParser() {
-        extractors = new HashMap<>();
-        linkExtractor = new LinkExtractor();
-        imageExtractor = new ImageExtractor();
-    }
-
     @Autowired
-    public HTMLParser(ImageExtractor imageExtractor, LinkExtractor linkExtractor) {
+    public HTMLParser(ElementExtractor imageExtractor, ElementExtractor linkExtractor) {
         this.linkExtractor = linkExtractor;
         this.imageExtractor = imageExtractor;
         extractors = new HashMap<>();
