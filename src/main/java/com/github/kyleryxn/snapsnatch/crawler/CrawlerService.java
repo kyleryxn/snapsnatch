@@ -89,6 +89,14 @@ public class CrawlerService {
             }
         }
 
+        try {
+            // Example: 1000 milliseconds delay for a rate limit of 1 request per second
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            return;
+        }
+
         String content = webContentReader.readContent(url);
         pageCount.incrementAndGet(); // *
 

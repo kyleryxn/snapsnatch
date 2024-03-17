@@ -25,7 +25,7 @@ public class WebCrawlerTest {
     void t1() {
         WebContentReader webContentReader = new WebContentReader(new HttpClientFactory().createCustom());
         CrawlerService crawlerService = new CrawlerService(webContentReader, new ParserService(HTMLParser, robotsTxtParser));
-        crawlerService.setBaseURL("https://www.vulog.com/");
+        crawlerService.setBaseURL("https://example.com/");
         crawlerService.crawl();
 
         ConcurrentMap<String, Set<Image>> images = new ConcurrentHashMap<>(crawlerService.getImages());
