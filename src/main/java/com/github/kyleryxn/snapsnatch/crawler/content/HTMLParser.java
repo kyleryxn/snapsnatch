@@ -4,12 +4,14 @@ import com.github.kyleryxn.snapsnatch.image.model.Image;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -18,11 +20,10 @@ import static org.jsoup.parser.Parser.htmlParser;
 @Component
 class HTMLParser implements Parser {
     private final Map<String, ElementExtractor> extractors;
-    private Set<Image> images;
+    private final Set<Image> images;
     private Set<String> links;
     private String baseURL;
 
-    @Autowired
     public HTMLParser(List<ElementExtractor> extractorsList) {
         this.extractors = extractorsList.stream()
                 .collect(Collectors.toMap(ElementExtractor::getExtractorType, Function.identity()));
