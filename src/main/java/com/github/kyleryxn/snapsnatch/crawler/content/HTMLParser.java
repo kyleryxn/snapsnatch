@@ -21,7 +21,7 @@ import static org.jsoup.parser.Parser.htmlParser;
 class HTMLParser implements Parser {
     private final Map<String, ElementExtractor> extractors;
     private final Set<Image> images;
-    private Set<String> links;
+    private final Set<String> links;
     private String baseURL;
 
     public HTMLParser(List<ElementExtractor> extractorsList) {
@@ -56,28 +56,7 @@ class HTMLParser implements Parser {
         Elements anchorTags = document.select("a[href]");
 
         images.addAll(extractors.get("ImageExtractor").extractImages(imageTags));
-        links = new HashSet<>();
-        links.add(baseURL);
-
-        for (String link : extractors.get("LinkExtractor").extractLinks(anchorTags)) {
-            if (link.startsWith("/")) {
-                link = baseURL.substring(0, baseURL.lastIndexOf("/")) + link;
-            }
-
-            if (isSameDomain(link)) {
-                links.add(link);
-            }
-        }
-    }
-
-    private boolean isSameDomain(String url) {
-        try {
-            URI uri = new URI(url);
-            URI startURI = new URI(baseURL);
-            return uri.getHost().equalsIgnoreCase(startURI.getHost());
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
+        links.addAll(extractors.get("LinkExtractor").extractLinks(anchorTags));
     }
 
 }
