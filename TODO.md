@@ -84,3 +84,31 @@ transformation, and mediation of messages within the application.
 
 ### Labels:
 `integration` `apache-camel` `routing`
+
+<hr>
+
+## 4. Utilize Docker for Project Deployment
+
+- **File:** TBD
+- **Description:** Containerize the application using Docker to ensure consistent environments for development, 
+testing, and production.
+
+### Steps:
+1. **Step 1:** Install Docker on your development machine if it's not already installed.
+2. **Step 2:** Create a `Dockerfile` in the root directory of the project.
+3. **Step 3:** Define the base image in the `Dockerfile` (e.g., `FROM java:11` for a Java application).
+4. **Step 4:** Add instructions to copy the project files into the Docker image.
+5. **Step 5:** Set up the necessary environment variables within the `Dockerfile`.
+6. **Step 6:** Define the command to run the application within the Docker container.
+7. **Step 7:** Build the Docker image using the command `docker build -t myapp:latest .`
+8. **Step 8:** Test the Docker image locally by running `docker run -p 8080:8080 myapp:latest` and verifying the application is accessible.
+9. **Step 9:** Push the Docker image to a container registry (e.g., Docker Hub, GitHub Container Registry).
+10. **Step 10:** Set up deployment scripts or CI/CD pipelines to deploy the Docker image to the production environment.
+
+### Additional Notes:
+- Ensure that the Dockerfile optimizes for build caching to speed up build times.
+- Consider multi-stage builds to minimize the size of the production image.
+
+### Labels:
+`docker` `deployment` `infrastructure`
+
