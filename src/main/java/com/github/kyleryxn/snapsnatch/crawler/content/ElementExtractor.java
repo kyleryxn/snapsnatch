@@ -8,6 +8,11 @@ import java.util.Set;
 
 public interface ElementExtractor {
 
+    String getExtractorType();
+
+    default void setBaseURL(String baseURL) {
+    }
+
     default Set<Image> extractImages(Elements imgTags) {
         return new HashSet<>();
     }

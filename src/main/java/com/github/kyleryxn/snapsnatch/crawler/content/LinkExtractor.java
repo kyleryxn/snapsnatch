@@ -31,6 +31,11 @@ public class LinkExtractor implements ElementExtractor {
     }
 
     @Override
+    public String getExtractorType() {
+        return getClass().getSimpleName();
+    }
+
+    @Override
     public Set<String> extractLinks(Elements anchorTags) {
         Predicate<String> validURL = processor::isValidURL;
         Set<String> links = new HashSet<>();
