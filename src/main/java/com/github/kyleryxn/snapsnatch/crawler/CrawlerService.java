@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 public class CrawlerService {
@@ -20,6 +21,9 @@ public class CrawlerService {
     private final ConcurrentMap<String, Set<Image>> images;
     private String startUrl;
     private boolean crawlFlag;
+
+    private long startTime;
+    private AtomicInteger pageCount;
 
     public CrawlerService(WebContentReader webContentReader, ParserService parserService) {
         this.webContentReader = webContentReader;
@@ -42,6 +46,9 @@ public class CrawlerService {
     }
 
     public void crawl() {
+        startTime = System.currentTimeMillis();
+        pageCount = new AtomicInteger(0);
+
         final ThreadFactory threadFactory = Thread.ofVirtual().name("crawler-", 1).factory();
         readRobotsTxt();
 
@@ -51,6 +58,8 @@ public class CrawlerService {
         try (ExecutorService executor = Executors.newThreadPerTaskExecutor(threadFactory)) {
             crawlPage(executor, startUrl);
         }
+
+        logCrawlSpeed();
     }
 
     private void readRobotsTxt() {
@@ -81,12 +90,25 @@ public class CrawlerService {
         }
 
         String content = webContentReader.readContent(url);
+        pageCount.incrementAndGet(); // *
         Set<String> urls = parserService.parseHTMLAndGetLinks(content, url);
         Set<Image> imagesOnPage = parserService.parseHTMLAndGetImages(content);
         images.putIfAbsent(url, imagesOnPage);
 
         for (String link : urls) {
             executor.submit(() -> crawlPage(executor, link));
+        }
+    }
+
+    private void logCrawlSpeed() {
+        long endTime = System.currentTimeMillis();
+        long duration = endTime - startTime; // Duration in milliseconds
+        double seconds = duration / 1000.0;
+        int totalPages = pageCount.get();
+
+        if (seconds > 0) {
+            double pagesPerSecond = totalPages / seconds;
+            LOGGER.info("Crawled {} pages in {} seconds ({} pages/second)", totalPages, seconds, pagesPerSecond);
         }
     }
 
