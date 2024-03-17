@@ -52,7 +52,7 @@ class JPGImageFactoryTest {
         @Test
         @DisplayName("Test: Given a ImageFactory Type, When Retrieving, Then Return Correct Image Type")
         void givenFactoryType_whenRetrieving_thenReturnCorrectType() {
-            assertEquals("jpg", imageFactory.getFactoryType());
+            assertEquals("JPG", imageFactory.getFactoryType());
         }
 
     }
