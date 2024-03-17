@@ -1,10 +1,12 @@
 package com.github.kyleryxn.snapsnatch.image.factory;
 
 import org.jsoup.nodes.Element;
+import org.springframework.stereotype.Component;
 
 import java.util.stream.StreamSupport;
 
-public class ImageFactoryUtil {
+@Component
+class ImageFactoryUtil {
 
     public String parseDescription(Element imgTag) {
         return imgTag.attr("alt").isBlank() ? "None" : imgTag.attr("alt").trim();
