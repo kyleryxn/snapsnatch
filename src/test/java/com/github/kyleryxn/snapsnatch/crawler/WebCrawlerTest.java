@@ -17,12 +17,12 @@ public class WebCrawlerTest {
     @Test
     void t1() {
         WebContentReader webContentReader = new WebContentReader(new HttpClientFactory().createCustom());
-        WebCrawlerService webCrawlerService = new WebCrawlerService(webContentReader, new RobotsTxtParser(), new HTMLParser(new ImageExtractor(), new LinkExtractor()));
-        webCrawlerService.setStartUrl("https://spring.io/");
-        webCrawlerService.crawl();
+        CrawlerService crawlerService = new CrawlerService(webContentReader, new RobotsTxtParser(), new HTMLParser(new ImageExtractor(), new LinkExtractor()));
+        crawlerService.setStartUrl("https://spring.io/");
+        crawlerService.crawl();
 
-        ConcurrentMap<String, Set<Image>> images = new ConcurrentHashMap<>(webCrawlerService.getImages());
-        ConcurrentMap<String, Boolean> visited = new ConcurrentHashMap<>(webCrawlerService.getVisited());
+        ConcurrentMap<String, Set<Image>> images = new ConcurrentHashMap<>(crawlerService.getImages());
+        ConcurrentMap<String, Boolean> visited = new ConcurrentHashMap<>(crawlerService.getVisited());
         Set<String> pics = images.entrySet().stream().flatMap(e -> e.getValue().stream()).map(Image::getURL).collect(Collectors.toSet());
         pics.forEach(System.out::println);
     }
