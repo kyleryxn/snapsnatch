@@ -28,6 +28,7 @@ class LinkExtractor implements ElementExtractor {
     @Override
     public Set<String> extractLinks(Elements anchorTags) {
         Set<String> links = new HashSet<>();
+        links.add(baseURL);
 
         anchorTags.stream()
                 .map(tag -> tag.attr("href").trim().replaceAll("\\s", "%20"))
