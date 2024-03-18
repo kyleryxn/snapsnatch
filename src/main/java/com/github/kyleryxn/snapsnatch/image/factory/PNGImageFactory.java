@@ -10,8 +10,8 @@ class PNGImageFactory implements ImageFactory {
     private final ImageFactoryUtil factoryUtil;
     private Element imgTag;
 
-    public PNGImageFactory() {
-        this.factoryUtil = new ImageFactoryUtil();
+    public PNGImageFactory(ImageFactoryUtil factoryUtil) {
+        this.factoryUtil = factoryUtil;
     }
 
     @Override

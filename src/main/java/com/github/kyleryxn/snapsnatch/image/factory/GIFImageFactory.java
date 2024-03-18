@@ -10,8 +10,8 @@ class GIFImageFactory implements ImageFactory {
     private final ImageFactoryUtil factoryUtil;
     private Element imgTag;
 
-    public GIFImageFactory() {
-        this.factoryUtil = new ImageFactoryUtil();
+    public GIFImageFactory(ImageFactoryUtil factoryUtil) {
+        this.factoryUtil = factoryUtil;
     }
 
     @Override
