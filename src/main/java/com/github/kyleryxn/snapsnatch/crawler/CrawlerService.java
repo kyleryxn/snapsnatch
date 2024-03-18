@@ -45,6 +45,10 @@ public class CrawlerService {
         this.baseURL = baseURL;
     }
 
+    public String getBaseURL() {
+        return baseURL;
+    }
+
     public void crawl() {
         startTime = System.currentTimeMillis();
         pageCount = new AtomicInteger(0);
