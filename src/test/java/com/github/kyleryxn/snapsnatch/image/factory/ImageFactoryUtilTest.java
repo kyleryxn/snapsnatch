@@ -13,11 +13,11 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 @DisplayName("ImageFactoryUtil Tests")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ImageFactoryUtilTest {
+    private String tag;
+    private Element element;
 
     @Autowired
     private ImageFactoryUtil factoryUtil;
-    private String tag;
-    private Element element;
 
     @BeforeAll
     void setUp() {
