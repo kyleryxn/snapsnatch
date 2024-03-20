@@ -52,7 +52,7 @@ class GIFImageFactoryTest {
         @Test
         @DisplayName("Test: Given a ImageFactory Type, When Retrieving, Then Return Correct Image Type")
         void givenFactoryType_whenRetrieving_thenReturnCorrectType() {
-            assertEquals("GIF", imageFactory.getFactoryType());
+            assertEquals("GIFImageFactory", imageFactory.getFactoryType());
         }
 
     }
