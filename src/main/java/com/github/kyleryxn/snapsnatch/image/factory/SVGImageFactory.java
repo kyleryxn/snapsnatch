@@ -30,7 +30,7 @@ class SVGImageFactory implements ImageFactory {
 
     @Override
     public String getFactoryType() {
-        return "SVG";
+        return getClass().getSimpleName();
     }
 
 }

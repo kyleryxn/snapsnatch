@@ -30,7 +30,7 @@ class JPGImageFactory implements ImageFactory {
 
     @Override
     public String getFactoryType() {
-        return "JPG";
+        return getClass().getSimpleName();
     }
 
 }

@@ -30,7 +30,7 @@ class GIFImageFactory implements ImageFactory {
 
     @Override
     public String getFactoryType() {
-        return "GIF";
+        return getClass().getSimpleName();
     }
 
 }
