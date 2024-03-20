@@ -12,31 +12,30 @@ import java.util.stream.Collectors;
 @Service
 public class ParserService {
     private final Map<Content, ContentParser> parsers;
+    private final ContentParser robotsTxtParser;
+    private final ContentParser htmlParser;
 
     public ParserService(List<ContentParser> parsersList) {
         parsers = parsersList.stream()
                 .collect(Collectors.toMap(ContentParser::getContentType, Function.identity()));
+        robotsTxtParser = parsers.get(Content.ROBOTS);
+        htmlParser = parsers.get(Content.HTML);
     }
 
     public Set<Image> parseAndGetImages(String content) {
-        ContentParser parser = parsers.get(Content.HTML);
-        parser.parse(content);
-
-        return parser.getImages();
+        htmlParser.parse(content);
+        return htmlParser.getImages();
     }
 
     public Set<String> parseAndGetLinks(String content, String baseURL) {
-        ContentParser parser = parsers.get(Content.HTML);
-        parser.setBaseURL(baseURL);
-        parser.parse(content);
+        htmlParser.setBaseURL(baseURL);
+        htmlParser.parse(content);
 
-        return parser.getLinks();
+        return htmlParser.getLinks();
     }
 
     public Map<String, List<String>> parseAndGetDirectives(String content) {
-        ContentParser robotsTxtParser = parsers.get(Content.ROBOTS);
         robotsTxtParser.parse(content);
-
         return robotsTxtParser.getDirectives();
     }
 
