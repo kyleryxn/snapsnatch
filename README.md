@@ -5,10 +5,6 @@
 
 [![maven]](https://maven.apache.org/)
 
-<div style="text-align: center">
-  <img src="./docs/images/snapsnatch-logo.webp" alt="SnapSnatch Logo" width="400" height="400">
-</div>
-
 SnapSnatch emerged from the creative depths of a job interview hackathon, where an ingenious idea sparked the birth of
 a web crawling marvel. Originally conceived as a humble project, its evolution from the primitive prototype to its
 current form was marked by a journey of innovation and refinement. Before SnapSnatch, there was PictoCrawl, a precursor
@@ -101,5 +97,4 @@ layer and package by feature.
 [ci]: https://github.com/kyleryxn/snapsnatch/actions/workflows/maven.yml/badge.svg
 
 <!-- Images -->
-[logo]: ./docs/images/snapsnatch-logo.webp
 [maven]: ./docs/images/maven-feather.png
