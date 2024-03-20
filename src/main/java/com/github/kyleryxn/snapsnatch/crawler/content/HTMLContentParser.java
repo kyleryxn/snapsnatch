@@ -6,8 +6,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -18,35 +16,36 @@ import java.util.stream.Collectors;
 import static org.jsoup.parser.Parser.htmlParser;
 
 @Component
-class HTMLParser implements Parser {
+class HTMLContentParser implements ContentParser {
     private final Map<String, ElementExtractor> extractors;
     private final Set<Image> images;
     private final Set<String> links;
-    private String baseURL;
 
-    HTMLParser(List<ElementExtractor> extractorsList) {
+    HTMLContentParser(List<ElementExtractor> extractorsList) {
         this.extractors = extractorsList.stream()
                 .collect(Collectors.toMap(ElementExtractor::getExtractorType, Function.identity()));
         images = new HashSet<>();
         links = new HashSet<>();
     }
 
+    @Override
+    public void setBaseURL(String baseURL) {
+        extractors.get("LinkExtractor").setBaseURL(baseURL);
+    }
+
+    @Override
     public Set<Image> getImages() {
         return images;
     }
 
+    @Override
     public Set<String> getLinks() {
         return links;
     }
 
-    public void setBaseURL(String baseURL) {
-        this.baseURL = baseURL;
-        extractors.get("LinkExtractor").setBaseURL(this.baseURL);
-    }
-
     @Override
-    public String getContentType() {
-        return Content.HTML.getContentType();
+    public Content getContentType() {
+        return Content.HTML;
     }
 
     @Override

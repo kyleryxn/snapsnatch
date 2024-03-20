@@ -1,36 +1,42 @@
 package com.github.kyleryxn.snapsnatch.crawler.content;
 
 import com.github.kyleryxn.snapsnatch.image.model.Image;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class ParserService {
-    private final HTMLParser htmlParser;
-    private final RobotsTxtParser robotsTxtParser;
+    private final Map<Content, ContentParser> parsers;
 
-    public ParserService(@Qualifier("HTMLParser") Parser htmlParser, @Qualifier("robotsTxtParser") Parser robotsTxtParser) {
-        this.htmlParser = (HTMLParser) htmlParser;
-        this.robotsTxtParser = (RobotsTxtParser) robotsTxtParser;
+    public ParserService(List<ContentParser> parsersList) {
+        parsers = parsersList.stream()
+                .collect(Collectors.toMap(ContentParser::getContentType, Function.identity()));
     }
 
     public Set<Image> parseAndGetImages(String content) {
-        htmlParser.parse(content);
-        return htmlParser.getImages();
+        ContentParser parser = parsers.get(Content.HTML);
+        parser.parse(content);
+
+        return parser.getImages();
     }
 
     public Set<String> parseAndGetLinks(String content, String baseURL) {
-        htmlParser.setBaseURL(baseURL);
-        htmlParser.parse(content);
-        return htmlParser.getLinks();
+        ContentParser parser = parsers.get(Content.HTML);
+        parser.setBaseURL(baseURL);
+        parser.parse(content);
+
+        return parser.getLinks();
     }
 
     public Map<String, List<String>> parseAndGetDirectives(String content) {
+        ContentParser robotsTxtParser = parsers.get(Content.ROBOTS);
         robotsTxtParser.parse(content);
+
         return robotsTxtParser.getDirectives();
     }
 

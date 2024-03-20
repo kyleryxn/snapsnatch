@@ -13,21 +13,27 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-class RobotsTxtParser implements Parser {
-    private static final Logger LOGGER = LoggerFactory.getLogger(RobotsTxtParser.class);
+class RobotsTxtContentParser implements ContentParser {
+    private static final Logger LOGGER = LoggerFactory.getLogger(RobotsTxtContentParser.class);
     private final Map<String, List<String>> directives;
 
-    RobotsTxtParser() {
+    RobotsTxtContentParser() {
         this.directives = new HashMap<>();
     }
 
+    @Override
     public Map<String, List<String>> getDirectives() {
         return directives;
     }
 
     @Override
-    public String getContentType() {
-        return Content.ROBOTS.getContentType();
+    public void setBaseURL(String baseURL) {
+        LOGGER.warn("Robots.txt parser does not require a base URL.");
+    }
+
+    @Override
+    public Content getContentType() {
+        return Content.ROBOTS;
     }
 
     @Override

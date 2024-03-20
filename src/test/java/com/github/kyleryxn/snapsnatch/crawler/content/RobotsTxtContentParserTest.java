@@ -20,12 +20,12 @@ import static org.mockito.MockitoAnnotations.openMocks;
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @DisplayName("RobotsTxtParser Tests")
-class RobotsTxtParserTest {
+class RobotsTxtContentParserTest {
     private AutoCloseable closeable;
     private String content;
 
     @Autowired
-    private RobotsTxtParser robotsTxtParser;
+    private RobotsTxtContentParser robotsTxtParser;
 
     @Mock
     private BufferedReader reader;
@@ -49,10 +49,10 @@ class RobotsTxtParserTest {
         @DisplayName("Given RobotsTxt Content, When Getting Type, Then Return Correct Content Type")
         public void givenRobotsTxtContent_whenGettingContent_thenReturnCorrectContent() {
             // When
-            String result = robotsTxtParser.getContentType();
+            Content result = robotsTxtParser.getContentType();
 
             // Then
-            assertEquals("ROBOTS", result);
+            assertEquals(Content.ROBOTS, result);
         }
 
     }

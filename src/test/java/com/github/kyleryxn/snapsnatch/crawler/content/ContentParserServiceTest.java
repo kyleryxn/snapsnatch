@@ -14,16 +14,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @DisplayName("ParserService Tests")
-class ParserServiceTest {
+class ContentParserServiceTest {
 
     @Autowired
     private ParserService parserService;
 
     @Autowired
-    private Parser HTMLParser;
+    private ContentParser HTMLContentParser;
 
     @Autowired
-    private Parser robotsTxtParser;
+    private ContentParser robotsTxtContentParser;
 
     @Test
     @DisplayName("Test: Given HTML Content, When Parsing Images, Then Return Correct Images")

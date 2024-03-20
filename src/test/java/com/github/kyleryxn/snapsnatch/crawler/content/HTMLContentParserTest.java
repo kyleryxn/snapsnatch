@@ -12,8 +12,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @DisplayName("HTMLParser Tests")
-class HTMLParserTest {
-    private HTMLParser htmlParser;
+class HTMLContentParserTest {
+    private HTMLContentParser htmlParser;
 
     @Autowired
     private ElementExtractor linkExtractor;
@@ -23,7 +23,7 @@ class HTMLParserTest {
 
     @BeforeEach
     void setUp() {
-        htmlParser = new HTMLParser(List.of(imageExtractor, linkExtractor));
+        htmlParser = new HTMLContentParser(List.of(imageExtractor, linkExtractor));
         htmlParser.setBaseURL("https://example.com");
     }
 
@@ -31,10 +31,10 @@ class HTMLParserTest {
     @DisplayName("Test: Given Content Type, When Getting Content Type, Then Return Correct Content Type")
     void givenContentType_whenGettingContentType_thenReturnCorrectContentType() {
         // When
-        String actual = htmlParser.getContentType();
+        Content actual = htmlParser.getContentType();
 
         // Then
-        assertEquals("HTML", actual);
+        assertEquals(Content.HTML, actual);
     }
 
     @Test
