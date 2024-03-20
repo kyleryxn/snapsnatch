@@ -48,7 +48,7 @@ class HttpClientFactory {
                 .build();
     }
 
-    @Bean
+    @Bean("httpClient")
     public CloseableHttpClient createCustom() {
         return HttpClients.custom()
                 .setConnectionManager(connectionManager)
