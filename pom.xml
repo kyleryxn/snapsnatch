@@ -187,7 +187,7 @@
 					<excludedClasses>
 						<class>com.github.kyleryxn.snapsnatch.SnapsnatchApplication</class>
 						<class>com.github.kyleryxn.snapsnatch.common.LoggingConfig</class>
-						<class>com.github.kyleryxn.snapsnatch.crawler.HttpClientFactory</class>
+						<class>com.github.kyleryxn.snapsnatch.crawler.http.HttpClientFactory</class>
 						<class>com.github.kyleryxn.snapsnatch.crawler.content.ElementExtractor</class>
 						<class>com.github.kyleryxn.snapsnatch.crawler.content.ContentParser</class>
 						<class>com.github.kyleryxn.snapsnatch.image.model.*</class>
