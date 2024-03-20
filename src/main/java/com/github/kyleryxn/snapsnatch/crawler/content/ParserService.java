@@ -18,18 +18,18 @@ public class ParserService {
         this.robotsTxtParser = (RobotsTxtParser) robotsTxtParser;
     }
 
-    public Set<Image> parseHTMLAndGetImages(String content) {
+    public Set<Image> parseAndGetImages(String content) {
         htmlParser.parse(content);
         return htmlParser.getImages();
     }
 
-    public Set<String> parseHTMLAndGetLinks(String content, String baseURL) {
+    public Set<String> parseAndGetLinks(String content, String baseURL) {
         htmlParser.setBaseURL(baseURL);
         htmlParser.parse(content);
         return htmlParser.getLinks();
     }
 
-    public Map<String, List<String>> parseRobotsTxtAndGetDirectives(String content) {
+    public Map<String, List<String>> parseAndGetDirectives(String content) {
         robotsTxtParser.parse(content);
         return robotsTxtParser.getDirectives();
     }

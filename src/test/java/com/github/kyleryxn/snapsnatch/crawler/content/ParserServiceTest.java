@@ -32,7 +32,7 @@ class ParserServiceTest {
         String content = "<html><body><img src=\"https://example.com/image.jpg\"></body></html>";
 
         // When
-        Set<Image> images = parserService.parseHTMLAndGetImages(content);
+        Set<Image> images = parserService.parseAndGetImages(content);
 
         // Then
         assertTrue(images.stream().anyMatch(image -> image.getURL().equals("https://example.com/image.jpg")));
@@ -45,7 +45,7 @@ class ParserServiceTest {
         String content = "<html><body><a href=\"https://example.com/page1\"></body></html>";
 
         // When
-        Set<String> urls = parserService.parseHTMLAndGetLinks(content, "https://example.com");
+        Set<String> urls = parserService.parseAndGetLinks(content, "https://example.com");
 
         // Then
         assertTrue(urls.contains("https://example.com/page1"));
@@ -58,7 +58,7 @@ class ParserServiceTest {
         String content = "User-agent: *\nDisallow: /private/\n\nUser-agent: bot\nDisallow: /restricted/";
 
         // When
-        Map<String, List<String>> directives = parserService.parseRobotsTxtAndGetDirectives(content);
+        Map<String, List<String>> directives = parserService.parseAndGetDirectives(content);
 
         // Then
         assertEquals(2, directives.size());
