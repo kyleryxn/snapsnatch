@@ -26,8 +26,6 @@ application. Implementing Kafka will facilitate handling high volumes of data wi
 ### Labels:
 `integration` `apache-kafka` `messaging`
 
-<hr>
-
 ## 2. Integrating with Kafka Streams
 
 Enhance Data Processing with Kafka Streams
@@ -56,8 +54,6 @@ Kafka topics.
 ### Labels:
 `integration` `kafka-streams` `real-time-processing`
 
-<hr>
-
 ## 3. Integrating with Apache Camel
 
 Integrate Apache Camel for Enhanced Routing Capabilities
@@ -84,8 +80,6 @@ transformation, and mediation of messages within the application.
 
 ### Labels:
 `integration` `apache-camel` `routing`
-
-<hr>
 
 ## 4. Utilize Docker for Project Deployment
 
