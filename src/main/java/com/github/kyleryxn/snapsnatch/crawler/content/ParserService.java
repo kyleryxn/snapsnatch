@@ -17,8 +17,8 @@ public class ParserService {
     public ParserService(List<ContentParser> parsersList) {
         Map<Content, ContentParser> parsers = parsersList.stream()
                 .collect(Collectors.toMap(ContentParser::getContentType, Function.identity()));
-        robotsTxtParser = parsers.get(Content.ROBOTS);
         htmlParser = parsers.get(Content.HTML);
+        robotsTxtParser = parsers.get(Content.ROBOTS);
     }
 
     public Set<Image> parseAndGetImages(String content) {
