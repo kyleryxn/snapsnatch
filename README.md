@@ -6,7 +6,7 @@
 [![maven]](https://maven.apache.org/)
 
 <div style="text-align: center">
-  <img src="./docs/images/snapsnatch-logo.webp" alt="SnapSnatch Logo" width="600" height="600">
+  <img src="./docs/images/snapsnatch-logo.webp" alt="SnapSnatch Logo" width="400" height="400">
 </div>
 
 SnapSnatch emerged from the creative depths of a job interview hackathon, where an ingenious idea sparked the birth of
