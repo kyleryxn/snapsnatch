@@ -32,7 +32,6 @@ public class WebCrawlerTest {
         crawlerService.crawl();
 
         ConcurrentMap<String, Set<Image>> images = new ConcurrentHashMap<>(crawlerService.getImages());
-        ConcurrentMap<String, Boolean> visited = new ConcurrentHashMap<>(crawlerService.getVisited());
         Set<String> pics = images.entrySet().stream().flatMap(e -> e.getValue().stream()).map(Image::getURL).collect(Collectors.toSet());
         pics.forEach(System.out::println);
     }

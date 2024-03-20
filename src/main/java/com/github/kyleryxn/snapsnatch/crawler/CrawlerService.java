@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.*;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 public class CrawlerService {
@@ -18,7 +17,6 @@ public class CrawlerService {
     private final WebContentReader webContentReader;
     private final ParserService parserService;
     private final ICrawlStateManager crawlStateManager;
-    private final ConcurrentMap<String, Boolean> visited;
     private final ConcurrentMap<String, Set<Image>> images;
     private String baseURL;
     private boolean crawlFlag;
@@ -27,17 +25,12 @@ public class CrawlerService {
         this.webContentReader = webContentReader;
         this.parserService = parserService;
         this.crawlStateManager = crawlStateManager;
-        this.visited = new ConcurrentHashMap<>();
         this.images = new ConcurrentHashMap<>();
         crawlFlag = true;
     }
 
     public ConcurrentMap<String, Set<Image>> getImages() {
         return images;
-    }
-
-    public ConcurrentMap<String, Boolean> getVisited() {
-        return visited;
     }
 
     public void setBaseURL(String baseURL) {
@@ -66,7 +59,7 @@ public class CrawlerService {
 
     private void readRobotsTxt() {
         String robotsTxtContent = webContentReader.readContent(baseURL + "robots.txt");
-        Map<String, List<String>> robotsTxt = parserService.parseRobotsTxtAndGetDirectives(robotsTxtContent);
+        Map<String, List<String>> robotsTxt = parserService.parseAndGetDirectives(robotsTxtContent);
         List<String> allUserAgents = robotsTxt.get("*");
 
         if (allUserAgents != null && allUserAgents.contains("/")) {
@@ -78,7 +71,7 @@ public class CrawlerService {
                     .filter(entry -> entry.getKey().equals("*"))
                     .flatMap(entry -> entry.getValue().stream())
                     .map(link -> baseURL.substring(0, baseURL.lastIndexOf('/')) + link)
-                    .forEach(link -> visited.putIfAbsent(link, true));
+                    .forEach(crawlStateManager::visitPage);
         }
     }
 
@@ -100,8 +93,8 @@ public class CrawlerService {
         String content = webContentReader.readContent(url);
         crawlStateManager.incrementPageCount();
 
-        Set<String> urls = parserService.parseHTMLAndGetLinks(content, url);
-        Set<Image> imagesOnPage = parserService.parseHTMLAndGetImages(content);
+        Set<String> urls = parserService.parseAndGetLinks(content, url);
+        Set<Image> imagesOnPage = parserService.parseAndGetImages(content);
         images.putIfAbsent(url, imagesOnPage);
 
         for (String link : urls) {
