@@ -23,9 +23,6 @@ public class CrawlerService {
     private String baseURL;
     private boolean crawlFlag;
 
-    private long startTime;
-    private AtomicInteger pageCount;
-
     public CrawlerService(WebContentReader webContentReader, ParserService parserService, ICrawlStateManager crawlStateManager) {
         this.webContentReader = webContentReader;
         this.parserService = parserService;
