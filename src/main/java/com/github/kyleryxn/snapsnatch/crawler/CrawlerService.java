@@ -70,7 +70,7 @@ public class CrawlerService {
                     .stream()
                     .filter(entry -> entry.getKey().equals("*"))
                     .flatMap(entry -> entry.getValue().stream())
-                    .map(link -> baseURL.substring(0, baseURL.lastIndexOf('/')) + link)
+                    .map(url -> baseURL.substring(0, baseURL.length() - 1) + url)
                     .forEach(crawlStateManager::visitPage);
         }
     }
@@ -83,7 +83,7 @@ public class CrawlerService {
         }
 
         try {
-            // Example: 1000 milliseconds delay for a rate limit of 1 request per second
+            // 1000 milliseconds delay for a rate limit of 1 request per second
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
