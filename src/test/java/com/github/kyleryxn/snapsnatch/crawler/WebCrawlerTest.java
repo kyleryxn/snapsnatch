@@ -2,6 +2,7 @@ package com.github.kyleryxn.snapsnatch.crawler;
 
 import com.github.kyleryxn.snapsnatch.crawler.content.ContentParser;
 import com.github.kyleryxn.snapsnatch.crawler.content.ParserService;
+import com.github.kyleryxn.snapsnatch.crawler.http.WebContentReader;
 import com.github.kyleryxn.snapsnatch.image.model.Image;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,9 @@ import java.util.stream.Collectors;
 public class WebCrawlerTest {
 
     @Autowired
+    private WebContentReader webContentReader;
+
+    @Autowired
     private ICrawlStateManager crawlStateManager;
 
     @Autowired
@@ -27,7 +31,6 @@ public class WebCrawlerTest {
 
     @Test
     void t1() {
-        WebContentReader webContentReader = new WebContentReader(new HttpClientFactory().createCustom());
         CrawlerService crawlerService = new CrawlerService(webContentReader, new ParserService(List.of(HTMLContentParser, robotsTxtContentParser)), crawlStateManager);
         crawlerService.setBaseURL("https://www.vulog.com/");
         crawlerService.crawl();
