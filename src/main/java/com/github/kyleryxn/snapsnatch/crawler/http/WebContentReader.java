@@ -1,4 +1,4 @@
-package com.github.kyleryxn.snapsnatch.crawler;
+package com.github.kyleryxn.snapsnatch.crawler.http;
 
 import com.github.kyleryxn.snapsnatch.util.ContentReader;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
@@ -13,17 +13,17 @@ import java.io.IOException;
 @Component
 public class WebContentReader implements ContentReader {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebContentReader.class);
-
     private final CloseableHttpClient httpClient;
+    private final ResponseHandler<String> responseHandler;
 
     @Autowired
-    public WebContentReader(CloseableHttpClient httpClient) {
+    public WebContentReader(CloseableHttpClient httpClient, ResponseHandler<String> responseHandler) {
         this.httpClient = httpClient;
+        this.responseHandler = responseHandler;
     }
 
     @Override
     public String readContent(String url) {
-        StringHttpResponseHandler responseHandler = new StringHttpResponseHandler();
         String content = "";
 
         try {

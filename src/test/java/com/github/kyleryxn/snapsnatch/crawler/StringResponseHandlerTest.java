@@ -1,7 +1,9 @@
 package com.github.kyleryxn.snapsnatch.crawler;
 
+import com.github.kyleryxn.snapsnatch.crawler.http.ResponseHandler;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.core5.http.HttpEntity;
+import org.apache.hc.core5.http.HttpException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -19,11 +21,11 @@ import static org.mockito.MockitoAnnotations.openMocks;
 
 @SpringBootTest
 @DisplayName("StringHttpResponseHandler Tests")
-class StringHttpResponseHandlerTest {
+class StringResponseHandlerTest {
     private AutoCloseable closeable;
 
     @Autowired
-    private StringHttpResponseHandler responseHandler;
+    private ResponseHandler<String> responseHandler;
 
     @Mock
     private CloseableHttpResponse httpResponse;
@@ -43,7 +45,7 @@ class StringHttpResponseHandlerTest {
 
     @Test
     @DisplayName("Test: Given Successful HTTP Response, When Handling Response, Then Return Correct Content")
-    void givenSuccessfulHttpResponse_whenHandlingResponse_thenReturnCorrectContent() throws IOException {
+    void givenSuccessfulHttpResponse_whenHandlingResponse_thenReturnCorrectContent() throws IOException, HttpException {
         // Given
         String expected = "Success Response";
         when(httpResponse.getEntity()).thenReturn(httpEntity);
@@ -60,7 +62,7 @@ class StringHttpResponseHandlerTest {
 
     @Test
     @DisplayName("Test: Given Failed HTTP Response, When Handling Response, Then Return EmptyContent")
-    void givenFailedHttpResponseThrowsIOException_whenHandlingResponse_thenReturnEmptyString() throws IOException {
+    void givenFailedHttpResponseThrowsIOException_whenHandlingResponse_thenReturnEmptyString() throws IOException, HttpException {
         // Given
         when(httpResponse.getEntity()).thenReturn(httpEntity);
         when(httpEntity.getContent()).thenThrow(new IOException("IO Exception occurred"));

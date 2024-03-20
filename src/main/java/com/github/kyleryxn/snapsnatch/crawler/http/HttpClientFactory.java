@@ -1,4 +1,4 @@
-package com.github.kyleryxn.snapsnatch.crawler;
+package com.github.kyleryxn.snapsnatch.crawler.http;
 
 import com.github.kyleryxn.snapsnatch.common.LoggingConfig;
 import org.apache.hc.client5.http.config.TlsConfig;
