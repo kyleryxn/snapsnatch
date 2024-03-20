@@ -17,6 +17,7 @@ public class CrawlerService {
     private static final Logger LOGGER = LoggerFactory.getLogger(CrawlerService.class);
     private final WebContentReader webContentReader;
     private final ParserService parserService;
+    private final ICrawlStateManager crawlStateManager;
     private final ConcurrentMap<String, Boolean> visited;
     private final ConcurrentMap<String, Set<Image>> images;
     private String baseURL;
@@ -25,9 +26,10 @@ public class CrawlerService {
     private long startTime;
     private AtomicInteger pageCount;
 
-    public CrawlerService(WebContentReader webContentReader, ParserService parserService) {
+    public CrawlerService(WebContentReader webContentReader, ParserService parserService, ICrawlStateManager crawlStateManager) {
         this.webContentReader = webContentReader;
         this.parserService = parserService;
+        this.crawlStateManager = crawlStateManager;
         this.visited = new ConcurrentHashMap<>();
         this.images = new ConcurrentHashMap<>();
         crawlFlag = true;
@@ -50,8 +52,7 @@ public class CrawlerService {
     }
 
     public void crawl() {
-        startTime = System.currentTimeMillis();
-        pageCount = new AtomicInteger(0);
+        crawlStateManager.startCrawl();
 
         final ThreadFactory threadFactory = Thread.ofVirtual().name("crawler-", 1).factory();
         readRobotsTxt();
@@ -63,7 +64,7 @@ public class CrawlerService {
             crawlPage(executor, baseURL);
         }
 
-        logCrawlSpeed();
+        crawlStateManager.logCrawlStats();
     }
 
     private void readRobotsTxt() {
@@ -87,10 +88,8 @@ public class CrawlerService {
     private void crawlPage(ExecutorService executor, String url) {
         LOGGER.info("Visiting: {}", url);
 
-        if (visited.putIfAbsent(url, true) != null) {
-            if (visited.get(url)) {
-                return;
-            }
+        if (!crawlStateManager.visitPage(url)) {
+            return;
         }
 
         try {
@@ -102,7 +101,7 @@ public class CrawlerService {
         }
 
         String content = webContentReader.readContent(url);
-        pageCount.incrementAndGet(); // *
+        crawlStateManager.incrementPageCount();
 
         Set<String> urls = parserService.parseHTMLAndGetLinks(content, url);
         Set<Image> imagesOnPage = parserService.parseHTMLAndGetImages(content);
@@ -110,18 +109,6 @@ public class CrawlerService {
 
         for (String link : urls) {
             executor.submit(() -> crawlPage(executor, link));
-        }
-    }
-
-    private void logCrawlSpeed() {
-        long endTime = System.currentTimeMillis();
-        long duration = endTime - startTime; // Duration in milliseconds
-        double seconds = duration / 1000.0;
-        int totalPages = pageCount.get();
-
-        if (seconds > 0) {
-            double pagesPerSecond = totalPages / seconds;
-            LOGGER.info("Crawled {} pages in {} seconds ({} pages/second)", totalPages, seconds, pagesPerSecond);
         }
     }
 

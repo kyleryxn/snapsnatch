@@ -16,6 +16,9 @@ import java.util.stream.Collectors;
 public class WebCrawlerTest {
 
     @Autowired
+    private ICrawlStateManager crawlStateManager;
+
+    @Autowired
     private Parser HTMLParser;
 
     @Autowired
@@ -24,7 +27,7 @@ public class WebCrawlerTest {
     @Test
     void t1() {
         WebContentReader webContentReader = new WebContentReader(new HttpClientFactory().createCustom());
-        CrawlerService crawlerService = new CrawlerService(webContentReader, new ParserService(HTMLParser, robotsTxtParser));
+        CrawlerService crawlerService = new CrawlerService(webContentReader, new ParserService(HTMLParser, robotsTxtParser), crawlStateManager);
         crawlerService.setBaseURL("https://www.vulog.com/");
         crawlerService.crawl();
 
