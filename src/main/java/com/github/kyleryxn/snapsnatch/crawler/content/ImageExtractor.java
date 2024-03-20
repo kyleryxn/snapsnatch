@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 class ImageExtractor implements ElementExtractor {
     private final ImageService imageService;
 
-    public ImageExtractor(ImageService imageService) {
+    ImageExtractor(ImageService imageService) {
         this.imageService = imageService;
     }
 

@@ -12,7 +12,7 @@ class LinkExtractor implements ElementExtractor {
     private final CompositeCrawlerUtil crawlerUtil;
     private String baseURL;
 
-    public LinkExtractor(CompositeCrawlerUtil crawlerUtil) {
+    LinkExtractor(CompositeCrawlerUtil crawlerUtil) {
         this.crawlerUtil = crawlerUtil;
     }
 

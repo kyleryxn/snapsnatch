@@ -10,7 +10,7 @@ class SVGImageFactory implements ImageFactory {
     private final ImageFactoryUtil factoryUtil;
     private Element imgTag;
 
-    public SVGImageFactory(ImageFactoryUtil factoryUtil) {
+    SVGImageFactory(ImageFactoryUtil factoryUtil) {
         this.factoryUtil = factoryUtil;
     }
 

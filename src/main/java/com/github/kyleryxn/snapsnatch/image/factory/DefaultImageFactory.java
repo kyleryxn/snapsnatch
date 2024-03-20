@@ -10,7 +10,7 @@ class DefaultImageFactory implements ImageFactory {
     private final ImageFactoryUtil imageFactoryUtil;
     private Element imageTag;
 
-    public DefaultImageFactory(ImageFactoryUtil imageFactoryUtil) {
+    DefaultImageFactory(ImageFactoryUtil imageFactoryUtil) {
         this.imageFactoryUtil = imageFactoryUtil;
     }
 

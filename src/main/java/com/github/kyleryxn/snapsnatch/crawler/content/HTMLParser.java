@@ -24,7 +24,7 @@ class HTMLParser implements Parser {
     private final Set<String> links;
     private String baseURL;
 
-    public HTMLParser(List<ElementExtractor> extractorsList) {
+    HTMLParser(List<ElementExtractor> extractorsList) {
         this.extractors = extractorsList.stream()
                 .collect(Collectors.toMap(ElementExtractor::getExtractorType, Function.identity()));
         images = new HashSet<>();

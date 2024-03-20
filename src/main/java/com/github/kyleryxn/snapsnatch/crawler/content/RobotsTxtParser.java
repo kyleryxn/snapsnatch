@@ -15,10 +15,9 @@ import java.util.Map;
 @Component
 class RobotsTxtParser implements Parser {
     private static final Logger LOGGER = LoggerFactory.getLogger(RobotsTxtParser.class);
-
     private final Map<String, List<String>> directives;
 
-    public RobotsTxtParser() {
+    RobotsTxtParser() {
         this.directives = new HashMap<>();
     }
 
