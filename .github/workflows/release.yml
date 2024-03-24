@@ -48,6 +48,7 @@ jobs:
             echo "VERSION_CHANGED=true" >> $GITHUB_ENV
           else
             echo "VERSION_CHANGED=false" >> $GITHUB_ENV
+          fi
 
       - name: Generate Release Notes
         id: generate-release-notes
