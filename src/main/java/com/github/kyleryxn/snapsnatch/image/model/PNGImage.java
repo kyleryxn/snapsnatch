@@ -1,20 +1,20 @@
 package com.github.kyleryxn.snapsnatch.image.model;
 
 public class PNGImage extends Image {
-    private final String name;
+    private final String description;
     private final boolean isLogo;
     private final String url;
 
-    public PNGImage(String name, boolean isLogo, String url) {
+    public PNGImage(String description, boolean isLogo, String url) {
 
-        this.name = name;
+        this.description = description;
         this.isLogo = isLogo;
         this.url = url;
     }
 
     @Override
     public String getDescription() {
-        return name;
+        return description;
     }
 
     @Override
@@ -30,7 +30,7 @@ public class PNGImage extends Image {
     @Override
     public String toString() {
         return "PNGImage{" +
-                "name='" + name + '\'' +
+                "name='" + description + '\'' +
                 ", isLogo=" + isLogo +
                 ", url='" + url + '\'' +
                 '}';
@@ -38,7 +38,7 @@ public class PNGImage extends Image {
 
     @Override
     public int compareTo(Image o) {
-        return name.compareTo(o.getDescription());
+        return description.compareTo(o.getDescription());
     }
 
 }
