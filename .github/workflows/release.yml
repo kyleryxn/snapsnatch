@@ -27,18 +27,31 @@ jobs:
       - name: Get the current POM version
         run: |
           echo "CURRENT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
+
       - name: Get latest tag
-        id: latest-tag
         run: |
           echo "LATEST_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)" >> $GITHUB_ENV
+
       - name: Check for version change
-        id: version-change
         run: |
           if [ "$CURRENT_VERSION" != "$LATEST_TAG" ]; then
             echo "VERSION_CHANGED=true" >> $GITHUB_ENV
           else
             echo "VERSION_CHANGED=false" >> $GITHUB_ENV
-          fi
+
+      - name: Generate Release Notes
+        id: generate-release-notes
+        run: |
+          # Example pseudo-code to generate release notes
+          echo "Generating release notes..."
+          RELEASE_NOTES_FILE="RELEASE_NOTES.md"
+          echo "# Release Notes - ${CURRENT_VERSION}" > $RELEASE_NOTES_FILE
+          echo "## Release Date: $(date +%Y-%m-%d)" >> $RELEASE_NOTES_FILE
+          echo "### New Features" >> $RELEASE_NOTES_FILE
+          echo "- Feature details" >> $RELEASE_NOTES_FILE
+          # Add more sections as necessary
+          echo "::set-output name=release_notes_path::${RELEASE_NOTES_FILE}"
+
       - name: Create Release
         if: env.VERSION_CHANGED == 'true'
         uses: actions/create-release@v1
@@ -49,3 +62,4 @@ jobs:
           release_name: Release ${{ env.CURRENT_VERSION }}
           draft: false
           prerelease: false
+          body_path: ${{ steps.generate-release-notes.outputs.release_notes_path }}
