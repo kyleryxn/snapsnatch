@@ -20,28 +20,20 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-          cache: maven
 
       - name: Get the current POM version
         run: |
-          CURRENT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
-          echo "CURRENT_VERSION=${CURRENT_VERSION}" >> $GITHUB_ENV
-          echo "Current version is ${CURRENT_VERSION}"
+          echo "CURRENT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
 
       - name: Get latest tag
         run: |
-          git fetch --tags
-          LATEST_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
-          echo "LATEST_TAG=${LATEST_TAG}" >> $GITHUB_ENV
-          echo "Latest tag is ${LATEST_TAG}"
+          echo "LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))" >> $GITHUB_ENV
 
       - name: Check for version change
         run: |
           if [ "$CURRENT_VERSION" == "$LATEST_TAG" ]; then
             echo "No version change detected in pom.xml, skipping release."
             exit 0
-          else
-            echo "Version change detected, proceeding with release."
           fi
 
   release:
@@ -57,7 +49,6 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-          cache: maven
 
       - name: Create Release
         uses: actions/create-release@v1
