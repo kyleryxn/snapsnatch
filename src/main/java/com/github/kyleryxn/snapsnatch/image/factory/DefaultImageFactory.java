@@ -30,7 +30,7 @@ class DefaultImageFactory implements ImageFactory {
 
     @Override
     public String getFactoryType() {
-        return getClass().getSimpleName();
+        return getClass().getSimpleName().replace("ImageFactory", "");
     }
 
 }
