@@ -2,15 +2,15 @@
 
 <p align="center">
     <a href="https://github.com/kyleryxn/snapsnatch/actions/workflows/maven.yml">
-        <img src="https://github.com/kyleryxn/snapsnatch/actions/workflows/maven.yml/badge.svg" alt="Maven build workflow">
+        <img src="https://github.com/kyleryxn/snapsnatch/actions/workflows/maven.yml/badge.svg" alt="Maven build workflow"/>
     </a>
     <a href="https://github.com/kyleryxn/snapsnatch/actions/workflows/release.yml">
-        <img src="https://github.com/kyleryxn/snapsnatch/actions/workflows/release.yml/badge.svg" alt="Release workflow">
+        <img src="https://github.com/kyleryxn/snapsnatch/actions/workflows/release.yml/badge.svg" alt="Release workflow"/>
     </a>
 </p>
 <p align="center">
     <a href="LICENSE">
-        <img src="https://img.shields.io/badge/License-MIT-yellow" alt="License">
+        <img src="https://img.shields.io/badge/License-MIT-yellow" alt="License"/>
     </a>
     <a href="https://maven.apache.org/">
         <img src="https://img.shields.io/badge/Built With-Apache Maven-C71A36?&logo=apache-maven" alt="Apache Maven">
