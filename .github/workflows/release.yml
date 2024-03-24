@@ -27,6 +27,10 @@ jobs:
       - name: Get the current POM version
         run: |
           echo "CURRENT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
+          echo "PRE_RELEASE=false" >> $GITHUB_ENV
+          if [[ "$CURRENT_VERSION" == *"-SNAPSHOT"* ]]; then
+            echo "PRE_RELEASE=true" >> $GITHUB_ENV
+          fi
 
       - name: Get latest tag
         run: |
@@ -42,14 +46,12 @@ jobs:
       - name: Generate Release Notes
         id: generate-release-notes
         run: |
-          # Example pseudo-code to generate release notes
+          # Add logic here to generate release notes
           echo "Generating release notes..."
           RELEASE_NOTES_FILE="RELEASE_NOTES.md"
           echo "# Release Notes - ${CURRENT_VERSION}" > $RELEASE_NOTES_FILE
           echo "## Release Date: $(date +%Y-%m-%d)" >> $RELEASE_NOTES_FILE
-          echo "### New Features" >> $RELEASE_NOTES_FILE
-          echo "- Feature details" >> $RELEASE_NOTES_FILE
-          # Add more sections as necessary
+          # Continue with generating release notes
           echo "::set-output name=release_notes_path::${RELEASE_NOTES_FILE}"
 
       - name: Create Release
@@ -59,7 +61,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ env.CURRENT_VERSION }}
-          release_name: v${{ env.CURRENT_VERSION }}
+          release_name: Release ${{ env.CURRENT_VERSION }}
           draft: false
-          prerelease: false
+          prerelease: ${{ env.PRE_RELEASE }}
           body_path: ${{ steps.generate-release-notes.outputs.release_notes_path }}
