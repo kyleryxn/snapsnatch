@@ -2,9 +2,7 @@ package com.github.kyleryxn.snapsnatch.crawler.content;
 
 import com.github.kyleryxn.snapsnatch.image.model.Image;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public interface ContentParser {
 
@@ -16,15 +14,19 @@ public interface ContentParser {
     }
 
     default Set<Image> getImages() {
-        return null;
+        return new HashSet<>();
     }
 
     default Set<String> getLinks() {
-        return null;
+        return new HashSet<>();
     }
 
-    default Map<String, List<String>> getDirectives() {
-        return null;
+    default Map<String, List<String>> getAllDirectives() {
+        return new HashMap<>();
+    }
+
+    default List<String> getDirectives(String header) {
+        return new ArrayList<>();
     }
 
 }

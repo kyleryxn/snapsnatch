@@ -22,13 +22,13 @@ class RobotsTxtContentParser implements ContentParser {
     }
 
     @Override
-    public Map<String, List<String>> getDirectives() {
+    public Map<String, List<String>> getAllDirectives() {
         return directives;
     }
 
     @Override
-    public void setBaseURL(String baseURL) {
-        LOGGER.warn("Robots.txt parser does not require a base URL.");
+    public List<String> getDirectives(String header) {
+        return directives.get(header);
     }
 
     @Override

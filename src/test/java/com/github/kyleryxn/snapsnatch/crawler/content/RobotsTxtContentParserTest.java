@@ -75,7 +75,7 @@ class RobotsTxtContentParserTest {
 
             // When
             robotsTxtParser.parse(content);
-            Map<String, List<String>> robotsTxt = robotsTxtParser.getDirectives();
+            Map<String, List<String>> robotsTxt = robotsTxtParser.getAllDirectives();
 
             // Then
             assertEquals(2, robotsTxt.size());
@@ -95,7 +95,7 @@ class RobotsTxtContentParserTest {
 
             // When
             robotsTxtParser.parse(content);
-            Map<String, List<String>> robotsTxt = robotsTxtParser.getDirectives();
+            Map<String, List<String>> robotsTxt = robotsTxtParser.getAllDirectives();
 
             // Then
             assertEquals(List.of("/private/"), robotsTxt.get("*"));
@@ -115,7 +115,7 @@ class RobotsTxtContentParserTest {
 
             // When
             robotsTxtParser.parse(content);
-            Map<String, List<String>> robotsTxt = robotsTxtParser.getDirectives();
+            Map<String, List<String>> robotsTxt = robotsTxtParser.getAllDirectives();
 
             // Then
             assertFalse(robotsTxt.get("*").isEmpty());
@@ -135,7 +135,7 @@ class RobotsTxtContentParserTest {
 
             // When
             robotsTxtParser.parse(content);
-            Map<String, List<String>> robotsTxt = robotsTxtParser.getDirectives();
+            Map<String, List<String>> robotsTxt = robotsTxtParser.getAllDirectives();
 
             // Then
             assertEquals(List.of("/restricted/"), robotsTxt.get("bot"));
@@ -155,7 +155,7 @@ class RobotsTxtContentParserTest {
 
             // When
             robotsTxtParser.parse(content);
-            Map<String, List<String>> robotsTxt = robotsTxtParser.getDirectives();
+            Map<String, List<String>> robotsTxt = robotsTxtParser.getAllDirectives();
 
             // Then
             assertFalse(robotsTxt.get("bot").isEmpty());
@@ -167,7 +167,7 @@ class RobotsTxtContentParserTest {
         void givenNullEmptyRobotsTxtContent_whenParsing_thenReturnCorrectSizeOfRobotsTxtMap(String content) {
             // When
             robotsTxtParser.parse(content);
-            Map<String, List<String>> robotsTxt = robotsTxtParser.getDirectives();
+            Map<String, List<String>> robotsTxt = robotsTxtParser.getAllDirectives();
 
             // Then
             assertTrue(robotsTxt.isEmpty());

@@ -1,5 +1,6 @@
 package com.github.kyleryxn.snapsnatch.crawler;
 
+import com.github.kyleryxn.snapsnatch.crawler.content.PageContent;
 import com.github.kyleryxn.snapsnatch.crawler.http.WebContentReader;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
@@ -64,10 +65,10 @@ class WebContentReaderTest {
         setupHttpClientToReturnResponse();
 
         // When
-        String actual = contentReader.readContent("https://example.com");
+        PageContent actual = contentReader.readContent("https://example.com");
 
         // Then
-        assertEquals(expected, actual);
+        assertEquals(expected, actual.content());
     }
 
     @Test
@@ -78,10 +79,10 @@ class WebContentReaderTest {
                 .thenThrow(new IOException("Failed to execute"));
 
         // When
-        String content = contentReader.readContent("https://example.com");
+        PageContent content = contentReader.readContent("https://example.com");
 
         // Then
-        assertTrue(content.isEmpty());
+        assertTrue(content.content().isEmpty());
     }
 
     void setupHttpClientToReturnResponse() throws IOException {

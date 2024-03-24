@@ -35,7 +35,7 @@ public class ParserService {
 
     public Map<String, List<String>> parseAndGetDirectives(String content) {
         robotsTxtParser.parse(content);
-        return robotsTxtParser.getDirectives();
+        return robotsTxtParser.getAllDirectives();
     }
 
 }

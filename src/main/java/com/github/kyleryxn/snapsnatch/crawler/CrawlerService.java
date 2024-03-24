@@ -1,6 +1,8 @@
 package com.github.kyleryxn.snapsnatch.crawler;
 
+import com.github.kyleryxn.snapsnatch.crawler.content.PageContent;
 import com.github.kyleryxn.snapsnatch.crawler.content.ParserService;
+import com.github.kyleryxn.snapsnatch.crawler.http.WebContentReader;
 import com.github.kyleryxn.snapsnatch.image.model.Image;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,14 +21,13 @@ public class CrawlerService {
     private final ICrawlStateManager crawlStateManager;
     private final ConcurrentMap<String, Set<Image>> images;
     private String baseURL;
-    private boolean crawlFlag;
 
     public CrawlerService(WebContentReader webContentReader, ParserService parserService, ICrawlStateManager crawlStateManager) {
         this.webContentReader = webContentReader;
         this.parserService = parserService;
         this.crawlStateManager = crawlStateManager;
-        this.images = new ConcurrentHashMap<>();
-        crawlFlag = true;
+        images = new ConcurrentHashMap<>();
+        baseURL = "";
     }
 
     public ConcurrentMap<String, Set<Image>> getImages() {
@@ -42,13 +43,13 @@ public class CrawlerService {
     }
 
     public void crawl() {
-        crawlStateManager.startCrawl();
-
-        final ThreadFactory threadFactory = Thread.ofVirtual().name("crawler-", 1).factory();
-        readRobotsTxt();
-
-        if (!crawlFlag)
+        if (!readRobotsTxt()) {
+            LOGGER.info("Crawling disallowed by robots.txt");
             return;
+        }
+
+        crawlStateManager.startCrawl();
+        final ThreadFactory threadFactory = Thread.ofVirtual().name("crawler-", 1).factory();
 
         try (ExecutorService executor = Executors.newThreadPerTaskExecutor(threadFactory)) {
             crawlPage(executor, baseURL);
@@ -57,49 +58,35 @@ public class CrawlerService {
         crawlStateManager.logCrawlStats();
     }
 
-    private void readRobotsTxt() {
-        String robotsTxtContent = webContentReader.readContent(baseURL + "robots.txt");
-        Map<String, List<String>> robotsTxt = parserService.parseAndGetDirectives(robotsTxtContent);
-        List<String> allUserAgents = robotsTxt.get("*");
-
-        if (allUserAgents != null && allUserAgents.contains("/")) {
-            LOGGER.info("Crawling disallowed by robots.txt");
-            crawlFlag = false;
-        } else {
-            robotsTxt.entrySet()
-                    .stream()
-                    .filter(entry -> entry.getKey().equals("*"))
-                    .flatMap(entry -> entry.getValue().stream())
-                    .map(url -> baseURL.substring(0, baseURL.length() - 1) + url)
-                    .forEach(crawlStateManager::visitPage);
-        }
+    private boolean readRobotsTxt() {
+        String robotsTxtUrl = baseURL + "robots.txt";
+        PageContent robotsTxtContent = webContentReader.readContent(robotsTxtUrl);
+        Map<String, List<String>> directives = parserService.parseAndGetDirectives(robotsTxtContent.content());
+        return directives.getOrDefault("*", List.of()).stream().noneMatch(disallow -> disallow.equals("/"));
     }
 
     private void crawlPage(ExecutorService executor, String url) {
-        LOGGER.info("Visiting: {}", url);
-
         if (!crawlStateManager.visitPage(url)) {
             return;
         }
 
-        try {
-            // 1000 milliseconds delay for a rate limit of 1 request per second
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            return;
+        crawlStateManager.incrementRequestCount();
+        PageContent pageContent = webContentReader.readContent(url);
+
+        if (pageContent != null) {
+            crawlStateManager.incrementPageCount();
+            crawlStateManager.addContentType(pageContent.contentType());
+            crawlStateManager.addPageSize(pageContent.content().getBytes().length);
+
+            Set<String> urls = parserService.parseAndGetLinks(pageContent.content(), url);
+            Set<Image> imagesOnPage = parserService.parseAndGetImages(pageContent.content());
+            images.putIfAbsent(url, imagesOnPage);
+
+            for (String link : urls) {
+                executor.submit(() -> crawlPage(executor, link));
+            }
         }
 
-        String content = webContentReader.readContent(url);
-        crawlStateManager.incrementPageCount();
-
-        Set<String> urls = parserService.parseAndGetLinks(content, url);
-        Set<Image> imagesOnPage = parserService.parseAndGetImages(content);
-        images.putIfAbsent(url, imagesOnPage);
-
-        for (String link : urls) {
-            executor.submit(() -> crawlPage(executor, link));
-        }
     }
 
 }

@@ -1,7 +1,9 @@
 package com.github.kyleryxn.snapsnatch.util;
 
+import com.github.kyleryxn.snapsnatch.crawler.content.PageContent;
+
 public interface ContentReader {
 
-    String readContent(String directory);
+    PageContent readContent(String directory);
 
 }

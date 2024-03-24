@@ -1,6 +1,6 @@
-package com.github.kyleryxn.snapsnatch.crawler;
+package com.github.kyleryxn.snapsnatch.crawler.http;
 
-import com.github.kyleryxn.snapsnatch.crawler.http.ResponseHandler;
+import com.github.kyleryxn.snapsnatch.crawler.content.PageContent;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.core5.http.HttpEntity;
 import org.apache.hc.core5.http.HttpException;
@@ -15,17 +15,18 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
 
 @SpringBootTest
-@DisplayName("StringHttpResponseHandler Tests")
-class StringResponseHandlerTest {
+@DisplayName("PageContentResponseHandler Tests")
+class PageContentResponseHandlerTest {
+
     private AutoCloseable closeable;
 
     @Autowired
-    private ResponseHandler<String> responseHandler;
+    private ResponseHandler<PageContent> responseHandler;
 
     @Mock
     private CloseableHttpResponse httpResponse;
@@ -54,10 +55,10 @@ class StringResponseHandlerTest {
         when(httpEntity.getContent()).thenReturn(inputStream);
 
         // When
-        String result = responseHandler.handleResponse(httpResponse);
+        PageContent result = responseHandler.handleResponse(httpResponse);
 
         // Then
-        assertEquals(expected, result);
+        assertEquals("Success Response", result.content());
     }
 
     @Test
@@ -68,10 +69,11 @@ class StringResponseHandlerTest {
         when(httpEntity.getContent()).thenThrow(new IOException("IO Exception occurred"));
 
         // When
-        String result = responseHandler.handleResponse(httpResponse);
+        PageContent result = responseHandler.handleResponse(httpResponse);
 
         // Then
-        assertEquals("", result);
+        assertEquals("", result.content());
     }
+
 
 }

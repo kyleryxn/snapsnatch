@@ -8,6 +8,12 @@ public interface ICrawlStateManager {
 
     void incrementPageCount();
 
+    void incrementRequestCount();
+
+    void addPageSize(long size);
+
+    void addContentType(String contentType);
+
     void logCrawlStats();
 
 }
