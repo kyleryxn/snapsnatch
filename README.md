@@ -13,7 +13,7 @@
         <img src="https://img.shields.io/badge/License-MIT-yellow" alt="License">
     </a>
     <a href="https://maven.apache.org/">
-        <img src="https://img.shields.io/badge/Built With-Maven-C71A36?&logo=apache-maven" alt="Apache Maven">
+        <img src="https://img.shields.io/badge/Built With-Apache Maven-C71A36?&logo=apache-maven" alt="Apache Maven">
     </a>
 </p>
 
