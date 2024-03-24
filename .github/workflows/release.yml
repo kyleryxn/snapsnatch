@@ -7,17 +7,18 @@ on:
       - completed
     branches:
       - main
+    paths:
+      - 'pom.xml'
 
 jobs:
   release:
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up JDK 21
+      - name: Set up JDK
         uses: actions/setup-java@v3
         with:
           java-version: '21'
@@ -28,15 +29,10 @@ jobs:
         run: |
           CURRENT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
           echo "CURRENT_VERSION=$CURRENT_VERSION" >> $GITHUB_ENV
-          if [[ "$CURRENT_VERSION" == *"-SNAPSHOT"* ]]; then
-            echo "PRE_RELEASE=true" >> $GITHUB_ENV
-          else
-            echo "PRE_RELEASE=false" >> $GITHUB_ENV
-          fi
 
       - name: Get latest tag
         run: |
-          LATEST_TAG=$(git tag | sort -V | tail -n 1)
+          LATEST_TAG=$(git describe --tags `git rev-list --tags --max-count=1` 2>/dev/null || echo "")
           if [[ -z "$LATEST_TAG" ]]; then
             LATEST_TAG="0.0.0"
           fi
@@ -44,22 +40,10 @@ jobs:
 
       - name: Check for version change
         run: |
-          if [[ "$LATEST_TAG" != "$CURRENT_VERSION" ]]; then
+          if [[ "$CURRENT_VERSION" != "$LATEST_TAG" ]]; then
             echo "VERSION_CHANGED=true" >> $GITHUB_ENV
           else
             echo "VERSION_CHANGED=false" >> $GITHUB_ENV
-          fi
-
-      - name: Generate Release Notes
-        id: generate-release-notes
-        run: |
-          # Add logic here to generate release notes
-          echo "Generating release notes..."
-          RELEASE_NOTES_FILE="RELEASE_NOTES.md"
-          echo "# Release Notes - ${CURRENT_VERSION}" > $RELEASE_NOTES_FILE
-          echo "## Release Date: $(date +%Y-%m-%d)" >> $RELEASE_NOTES_FILE
-          # Continue with generating release notes
-          echo "::set-output name=release_notes_path::${RELEASE_NOTES_FILE}"
 
       - name: Create Release
         if: env.VERSION_CHANGED == 'true'
@@ -70,5 +54,4 @@ jobs:
           tag_name: ${{ env.CURRENT_VERSION }}
           release_name: Release ${{ env.CURRENT_VERSION }}
           draft: false
-          prerelease: ${{ env.PRE_RELEASE }}
-          body_path: ${{ steps.generate-release-notes.outputs.release_notes_path }}
+          prerelease: ${{ contains(env.CURRENT_VERSION, 'SNAPSHOT') }}
