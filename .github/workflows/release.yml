@@ -8,54 +8,53 @@ on:
       - '**/pom.xml'
 
 jobs:
-  check-version:
+  prepare:
     runs-on: ubuntu-latest
+    outputs:
+      new_version: ${{ steps.version_check.outputs.new_version }}
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up JDK 21
+      - name: Set up Java
         uses: actions/setup-java@v3
         with:
-          java-version: '21'
+          java-version: '21' # Adjust the Java version as needed
           distribution: 'temurin'
 
-      - name: Get the current POM version
+      - name: Determine new version
+        id: version_check
         run: |
-          echo "CURRENT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
-
-      - name: Get latest tag
-        run: |
-          echo "LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))" >> $GITHUB_ENV
-
-      - name: Check for version change
-        run: |
-          if [ "$CURRENT_VERSION" == "$LATEST_TAG" ]; then
-            echo "No version change detected in pom.xml, skipping release."
-            exit 0
+          current_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          latest_tag=$(git describe --tags --abbrev=0 || echo "0.0.0")
+          if [ "$current_version" != "$latest_tag" ]; then
+            echo "::set-output name=new_version::$current_version"
+          else
+            echo "::set-output name=new_version::"
           fi
 
   release:
-    needs: check-version
+    needs: prepare
+    if: ${{ needs.prepare.outputs.new_version }}
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up JDK 21
+      - name: Set up Java
         uses: actions/setup-java@v3
         with:
-          java-version: '21'
+          java-version: '21' # Adjust the Java version as needed
           distribution: 'temurin'
 
       - name: Create Release
         uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ env.CURRENT_VERSION }}
-          release_name: Release ${{ env.CURRENT_VERSION }}
+          tag_name: ${{ needs.prepare.outputs.new_version }}
+          release_name: Release ${{ needs.prepare.outputs.new_version }}
           draft: false
           prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
