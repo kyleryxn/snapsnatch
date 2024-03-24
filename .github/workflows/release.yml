@@ -44,6 +44,7 @@ jobs:
             echo "VERSION_CHANGED=true" >> $GITHUB_ENV
           else
             echo "VERSION_CHANGED=false" >> $GITHUB_ENV
+          fi
 
       - name: Create Release
         if: env.VERSION_CHANGED == 'true'
