@@ -1,3 +1,5 @@
+name: Release Workflow
+
 on:
   push:
     branches:
@@ -16,20 +18,31 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          java-version: '17' # Adjust this to your project's JDK version
+          java-version: '17'  # Adjust this to your project's JDK version
           distribution: 'temurin'
 
       - name: Get the current POM version
-        id: pom_version
         run: |
           echo "CURRENT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
 
-      - name: Get latest tag
-        id: git_tag
+      - name: Check if any tags exist
+        id: check_tags
         run: |
-          TAG=$(git describe --tags `git rev-list --tags --max-count=1` 2>/dev/null || echo "0.0.0")
-          echo "LATEST_TAG=$TAG" >> $GITHUB_ENV
-          echo "Found tag: $TAG"
+          if git rev-list --tags --max-count=1 2>/dev/null; then
+            echo "TAG_EXISTS=true" >> $GITHUB_ENV
+          else
+            echo "TAG_EXISTS=false" >> $GITHUB_ENV
+          fi
+
+      - name: Get latest tag
+        if: env.TAG_EXISTS == 'true'
+        run: |
+          echo "LATEST_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)" >> $GITHUB_ENV
+
+      - name: Set default version if no tags
+        if: env.TAG_EXISTS == 'false'
+        run: |
+          echo "LATEST_TAG=0.0.1" >> $GITHUB_ENV  # Set your default initial version here
 
       - name: Check for version change
         run: |
@@ -49,7 +62,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          java-version: '17' # Adjust this to your project's JDK version
+          java-version: '17'  # Adjust this to your project's JDK version
           distribution: 'temurin'
 
       - name: Create Release
