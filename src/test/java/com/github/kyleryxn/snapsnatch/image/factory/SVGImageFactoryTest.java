@@ -52,7 +52,7 @@ class SVGImageFactoryTest {
         @Test
         @DisplayName("Test: Given a ImageFactory Type, When Retrieving, Then Return Correct Image Type")
         void givenFactoryType_whenRetrieving_thenReturnCorrectType() {
-                assertEquals("SVGImageFactory", imageFactory.getFactoryType());
+                assertEquals("SVG", imageFactory.getFactoryType());
         }
 
     }
