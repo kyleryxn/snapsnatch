@@ -1,9 +1,23 @@
 # SnapSnatch
 
-![license-badge]
-[![Java CI with Maven][ci]][ci-passing]
-
-[![maven]](https://maven.apache.org/)
+<p align="center">
+    <a href="LICENSE">
+        <img src="https://img.shields.io/badge/License-MIT-yellow" alt="License">
+    </a>
+</p>
+<p align="center">
+    <a href="https://github.com/kyleryxn/snapsnatch/actions/workflows/maven.yml">
+        <img src="https://github.com/kyleryxn/snapsnatch/actions/workflows/maven.yml/badge.svg" alt="License">
+    </a>
+    <a href="https://github.com/kyleryxn/snapsnatch/actions/workflows/release.yml">
+        <img src="https://github.com/kyleryxn/snapsnatch/actions/workflows/release.yml/badge.svg">
+    </a>
+</p>
+<p align="center">
+    <a href="https://maven.apache.org/">
+        <img src="./docs/images/maven-feather.png" alt="License">
+    </a>
+</p>
 
 SnapSnatch emerged from the creative depths of a job interview hackathon, where an ingenious idea sparked the birth of
 a web crawling marvel. Originally conceived as a humble project, its evolution from the primitive prototype to its
@@ -90,11 +104,13 @@ layer and package by feature.
 [license]: ./LICENSE
 [apache-hc]: https://hc.apache.org/index.html
 [package-feature]: https://medium.com/sahibinden-technology/package-by-layer-vs-package-by-feature-7e89cde2ae3a
-[ci-passing]: https://github.com/kyleryxn/snapsnatch/actions/workflows/maven.yml
+[maven-ci-passing]: https://github.com/kyleryxn/snapsnatch/actions/workflows/maven.yml
+[release-ci-passing]: https://github.com/kyleryxn/snapsnatch/actions/workflows/release.yml
 
 <!-- Badges -->
 [license-badge]: https://img.shields.io/badge/License-MIT-yellow
-[ci]: https://github.com/kyleryxn/snapsnatch/actions/workflows/maven.yml/badge.svg
+[maven-ci-badge]: https://github.com/kyleryxn/snapsnatch/actions/workflows/maven.yml/badge.svg
+[release-ci-badge]: https://github.com/kyleryxn/snapsnatch/actions/workflows/release.yml/badge.svg
 
 <!-- Images -->
 [maven]: ./docs/images/maven-feather.png
