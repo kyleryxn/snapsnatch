@@ -12,10 +12,8 @@
     <a href="LICENSE">
         <img src="https://img.shields.io/badge/License-MIT-yellow" alt="License">
     </a>
-</p>
-<p align="center">
     <a href="https://maven.apache.org/">
-        <img src="./docs/images/maven-feather.png" alt="License">
+        <img src="https://img.shields.io/badge/Built With-Maven-C71A36?&logo=apache-maven" alt="Apache Maven">
     </a>
 </p>
 
@@ -109,6 +107,7 @@ layer and package by feature.
 
 <!-- Badges -->
 [license-badge]: https://img.shields.io/badge/License-MIT-yellow
+[maven-badge]: https://img.shields.io/badge/License-MIT-C71A36&logo=apache-maven
 [maven-ci-badge]: https://github.com/kyleryxn/snapsnatch/actions/workflows/maven.yml/badge.svg
 [release-ci-badge]: https://github.com/kyleryxn/snapsnatch/actions/workflows/release.yml/badge.svg
 
