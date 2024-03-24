@@ -26,27 +26,28 @@ jobs:
 
       - name: Get the current POM version
         run: |
-          echo "CURRENT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
-          echo "PRE_RELEASE=false" >> $GITHUB_ENV
+          CURRENT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          echo "CURRENT_VERSION=$CURRENT_VERSION" >> $GITHUB_ENV
           if [[ "$CURRENT_VERSION" == *"-SNAPSHOT"* ]]; then
             echo "PRE_RELEASE=true" >> $GITHUB_ENV
+          else
+            echo "PRE_RELEASE=false" >> $GITHUB_ENV
           fi
 
       - name: Get latest tag
         run: |
-          LATEST_TAG=$(git describe --tags `git rev-list --tags --max-count=1` 2>/dev/null || echo "")
-          echo "LATEST_TAG=$LATEST_TAG" >> $GITHUB_ENV
+          LATEST_TAG=$(git tag | sort -V | tail -n 1)
           if [[ -z "$LATEST_TAG" ]]; then
-          echo "VERSION_CHANGED=true" >> $GITHUB_ENV
+            LATEST_TAG="0.0.0"
+          fi
+          echo "LATEST_TAG=$LATEST_TAG" >> $GITHUB_ENV
+
+      - name: Check for version change
+        run: |
+          if [[ "$LATEST_TAG" != "$CURRENT_VERSION" ]]; then
+            echo "VERSION_CHANGED=true" >> $GITHUB_ENV
           else
-          echo "VERSION_CHANGED=false" >> $GITHUB_ENV
-          - name: Check for version change
-            run: |
-              if [[ -z "$LATEST_TAG" ]] || [ "$CURRENT_VERSION" != "$LATEST_TAG" ]; then
-                echo "VERSION_CHANGED=true" >> $GITHUB_ENV
-              else
-                echo "VERSION_CHANGED=false" >> $GITHUB_ENV
-              fi
+            echo "VERSION_CHANGED=false" >> $GITHUB_ENV
 
       - name: Generate Release Notes
         id: generate-release-notes
