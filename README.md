@@ -7,10 +7,10 @@
 </p>
 <p align="center">
     <a href="https://github.com/kyleryxn/snapsnatch/actions/workflows/maven.yml">
-        <img src="https://github.com/kyleryxn/snapsnatch/actions/workflows/maven.yml/badge.svg" alt="License">
+        <img src="https://github.com/kyleryxn/snapsnatch/actions/workflows/maven.yml/badge.svg" alt="Maven build workflow">
     </a>
     <a href="https://github.com/kyleryxn/snapsnatch/actions/workflows/release.yml">
-        <img src="https://github.com/kyleryxn/snapsnatch/actions/workflows/release.yml/badge.svg">
+        <img src="https://github.com/kyleryxn/snapsnatch/actions/workflows/release.yml/badge.svg" alt="Release workflow">
     </a>
 </p>
 <p align="center">
