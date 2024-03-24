@@ -1,6 +1,6 @@
 <h1 align="center" style="border-bottom: none;">SnapSnatch</h1>
 
-<p style="text-align: center">
+<p align="center">
     <a href="https://github.com/kyleryxn/snapsnatch/actions/workflows/maven.yml">
         <img src="https://github.com/kyleryxn/snapsnatch/actions/workflows/maven.yml/badge.svg" alt="Maven build workflow"/>
     </a>
@@ -8,7 +8,7 @@
         <img src="https://github.com/kyleryxn/snapsnatch/actions/workflows/release.yml/badge.svg" alt="Release workflow"/>
     </a>
 </p>
-<p style="text-align: center">
+<p align="center">
     <a href="LICENSE">
         <img src="https://img.shields.io/badge/License-MIT-yellow" alt="License"/>
     </a>
