@@ -19,7 +19,7 @@ class PageContentResponseHandler implements ResponseHandler<PageContent> {
     public PageContent handleResponse(ClassicHttpResponse httpResponse) {
         try {
             HttpEntity httpEntity = httpResponse.getEntity();
-            String contentType = httpResponse.getEntity().getContentType() != null ? httpResponse.getEntity().getContentType() : "";
+            String contentType = httpResponse.getEntity().getContentType() != null ? httpResponse.getEntity().getContentType() : "Undefined";
             String content = EntityUtils.toString(httpEntity);
 
             return new PageContent(contentType, content);
