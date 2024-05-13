@@ -1,7 +1,7 @@
 package com.github.kyleryxn.snapsnatch.crawler;
 
+import com.github.kyleryxn.snapsnatch.crawler.content.ContentParserService;
 import com.github.kyleryxn.snapsnatch.crawler.content.PageContent;
-import com.github.kyleryxn.snapsnatch.crawler.content.ParserService;
 import com.github.kyleryxn.snapsnatch.crawler.http.WebContentReader;
 import com.github.kyleryxn.snapsnatch.image.model.Image;
 import org.slf4j.Logger;
@@ -16,14 +16,14 @@ import java.util.concurrent.*;
 @Service
 public class CrawlerService {
     private static final Logger LOGGER = LoggerFactory.getLogger(CrawlerService.class);
-    private final WebContentReader webContentReader;
-    private final ParserService parserService;
+    private final WebContentReader contentReader;
+    private final ContentParserService parserService;
     private final ICrawlStateManager crawlStateManager;
     private final ConcurrentMap<String, Set<Image>> images;
     private String baseURL;
 
-    public CrawlerService(WebContentReader webContentReader, ParserService parserService, ICrawlStateManager crawlStateManager) {
-        this.webContentReader = webContentReader;
+    public CrawlerService(WebContentReader contentReader, ContentParserService parserService, ICrawlStateManager crawlStateManager) {
+        this.contentReader = contentReader;
         this.parserService = parserService;
         this.crawlStateManager = crawlStateManager;
         images = new ConcurrentHashMap<>();
@@ -58,20 +58,13 @@ public class CrawlerService {
         crawlStateManager.logCrawlStats();
     }
 
-    private boolean readRobotsTxt() {
-        String robotsTxtUrl = baseURL + "robots.txt";
-        PageContent robotsTxtContent = webContentReader.readContent(robotsTxtUrl);
-        Map<String, List<String>> directives = parserService.parseAndGetDirectives(robotsTxtContent.content());
-        return directives.getOrDefault("*", List.of()).stream().noneMatch(disallow -> disallow.equals("/"));
-    }
-
     private void crawlPage(ExecutorService executor, String url) {
         if (!crawlStateManager.visitPage(url)) {
             return;
         }
 
         crawlStateManager.incrementRequestCount();
-        PageContent pageContent = webContentReader.readContent(url);
+        PageContent pageContent = contentReader.readContent(url);
 
         if (pageContent != null) {
             crawlStateManager.incrementPageCount();
@@ -87,6 +80,14 @@ public class CrawlerService {
             }
         }
 
+    }
+
+    private boolean readRobotsTxt() {
+        String robotsTxtUrl = baseURL + "robots.txt";
+        PageContent robotsTxtContent = contentReader.readContent(robotsTxtUrl);
+        Map<String, List<String>> directives = parserService.parseAndGetDirectives(robotsTxtContent.content());
+
+        return directives.getOrDefault("*", List.of()).stream().noneMatch(disallow -> disallow.equals("/"));
     }
 
 }

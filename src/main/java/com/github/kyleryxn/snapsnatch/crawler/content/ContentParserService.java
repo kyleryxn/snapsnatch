@@ -10,11 +10,11 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
-public class ParserService {
+public class ContentParserService {
     private final ContentParser robotsTxtParser;
     private final ContentParser htmlParser;
 
-    public ParserService(List<ContentParser> parsersList) {
+    public ContentParserService(List<ContentParser> parsersList) {
         Map<Content, ContentParser> parsers = parsersList.stream()
                 .collect(Collectors.toMap(ContentParser::getContentType, Function.identity()));
         htmlParser = parsers.get(Content.HTML);

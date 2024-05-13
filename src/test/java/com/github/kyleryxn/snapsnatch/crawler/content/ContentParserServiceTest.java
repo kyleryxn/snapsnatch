@@ -17,13 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ContentParserServiceTest {
 
     @Autowired
-    private ParserService parserService;
-
-    @Autowired
-    private ContentParser HTMLContentParser;
-
-    @Autowired
-    private ContentParser robotsTxtContentParser;
+    private ContentParserService parserService;
 
     @Test
     @DisplayName("Test: Given HTML Content, When Parsing Images, Then Return Correct Images")

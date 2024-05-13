@@ -6,7 +6,6 @@ import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -17,7 +16,6 @@ public class WebContentReader implements ContentReader {
     private final CloseableHttpClient httpClient;
     private final ResponseHandler<PageContent> responseHandler;
 
-    @Autowired
     public WebContentReader(CloseableHttpClient httpClient, ResponseHandler<PageContent> responseHandler) {
         this.httpClient = httpClient;
         this.responseHandler = responseHandler;
