@@ -27,6 +27,8 @@ jobs:
       - name: Build with Maven
         run: mvn -B package --file pom.xml
 
+#     Dependency Tree Submission with Dependabot keeps failing, so I have commented it out for now
+
 #      - name: Maven Dependency Tree Dependency Submission for Dependabot
 #        if: github.actor == 'dependabot[bot]'
 #        uses: advanced-security/maven-dependency-submission-action@v4.0.2
