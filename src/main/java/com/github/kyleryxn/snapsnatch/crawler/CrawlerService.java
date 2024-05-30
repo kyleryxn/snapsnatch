@@ -71,11 +71,11 @@ public class CrawlerService {
             crawlStateManager.addContentType(pageContent.contentType());
             crawlStateManager.addPageSize(pageContent.content().getBytes().length);
 
-            Set<String> urls = parserService.parseAndGetLinks(pageContent.content(), url);
+            Set<String> links = parserService.parseAndGetLinks(pageContent.content(), url);
             Set<Image> imagesOnPage = parserService.parseAndGetImages(pageContent.content());
             images.putIfAbsent(url, imagesOnPage);
 
-            for (String link : urls) {
+            for (String link : links) {
                 executor.submit(() -> crawlPage(executor, link));
             }
         }
