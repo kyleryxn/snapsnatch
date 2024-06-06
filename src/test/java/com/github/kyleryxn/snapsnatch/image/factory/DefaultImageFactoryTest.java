@@ -7,10 +7,12 @@ import org.jsoup.parser.Tag;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
+@ActiveProfiles("ci")
 @DisplayName("DefaultImageFactory Tests")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class DefaultImageFactoryTest {
