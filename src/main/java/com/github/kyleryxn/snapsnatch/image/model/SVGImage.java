@@ -49,15 +49,10 @@ public class SVGImage extends Image {
     @Override
     public String toString() {
         return "SVGImage{" +
-                "name='" + description + '\'' +
+                ", description='" + description + '\'' +
                 ", isLogo=" + isLogo +
                 ", url='" + url + '\'' +
                 '}';
-    }
-
-    @Override
-    public int compareTo(Image o) {
-        return description.compareTo(o.getDescription());
     }
 
 }

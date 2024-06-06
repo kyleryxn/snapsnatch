@@ -1,6 +1,7 @@
 package com.github.kyleryxn.snapsnatch.image.model;
 
 public class JPGImage extends Image {
+
     private final String description;
     private final boolean isLogo;
     private final String url;
@@ -49,15 +50,10 @@ public class JPGImage extends Image {
     @Override
     public String toString() {
         return "JPGImage{" +
-                "name='" + description + '\'' +
+                ", description='" + description + '\'' +
                 ", isLogo=" + isLogo +
                 ", url='" + url + '\'' +
                 '}';
-    }
-
-    @Override
-    public int compareTo(Image o) {
-        return description.compareTo(o.getDescription());
     }
 
 }
