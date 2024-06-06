@@ -114,6 +114,16 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		
+		<dependency>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
 	</dependencies>
 	
 	<build>
@@ -184,6 +194,7 @@
 						<class>com.github.kyleryxn.snapsnatch.crawler.content.ElementExtractor</class>
 						<class>com.github.kyleryxn.snapsnatch.crawler.content.ContentParser</class>
 						<class>com.github.kyleryxn.snapsnatch.image.model.*</class>
+						<class>com.github.kyleryxn.snapsnatch.website.model.*</class>
 					</excludedClasses>
 					<excludedTestClasses>
 						<testClass>com.github.kyleryxn.snapsnatch.SnapsnatchApplicationTests</testClass>
