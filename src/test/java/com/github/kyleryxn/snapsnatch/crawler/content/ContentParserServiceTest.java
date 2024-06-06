@@ -1,10 +1,10 @@
 package com.github.kyleryxn.snapsnatch.crawler.content;
 
+import com.github.kyleryxn.snapsnatch.BaseTest;
 import com.github.kyleryxn.snapsnatch.image.model.Image;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 import java.util.Map;
@@ -13,9 +13,8 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@SpringBootTest
 @DisplayName("ParserService Tests")
-class ContentParserServiceTest {
+class ContentParserServiceTest extends BaseTest {
 
     @Autowired
     private ContentParserService parserService;

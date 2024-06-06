@@ -1,19 +1,18 @@
 package com.github.kyleryxn.snapsnatch.crawler;
 
+import com.github.kyleryxn.snapsnatch.BaseTest;
 import com.github.kyleryxn.snapsnatch.image.model.Image;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
 
-@SpringBootTest
-@ActiveProfiles("ci")
-public class WebCrawlerTest {
+@DisplayName("CrawlerService Test")
+public class CrawlerServiceTest extends BaseTest {
 
     @Autowired
     private CrawlerService crawlerService;

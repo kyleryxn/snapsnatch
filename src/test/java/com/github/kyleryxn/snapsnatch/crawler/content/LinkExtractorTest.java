@@ -1,22 +1,19 @@
 package com.github.kyleryxn.snapsnatch.crawler.content;
 
+import com.github.kyleryxn.snapsnatch.BaseTest;
 import org.jsoup.nodes.Element;
 import org.jsoup.parser.Tag;
 import org.jsoup.select.Elements;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest
-@ActiveProfiles("ci")
 @DisplayName("LinkExtractor Tests")
-class LinkExtractorTest {
+class LinkExtractorTest extends BaseTest {
 
     @Autowired
     private LinkExtractor linkExtractor;

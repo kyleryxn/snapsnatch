@@ -1,5 +1,6 @@
 package com.github.kyleryxn.snapsnatch.crawler;
 
+import com.github.kyleryxn.snapsnatch.BaseTest;
 import com.github.kyleryxn.snapsnatch.crawler.content.PageContent;
 import com.github.kyleryxn.snapsnatch.crawler.http.WebContentReader;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
@@ -14,9 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -27,10 +26,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
 
-@SpringBootTest
-@ActiveProfiles("ci")
 @DisplayName("WebContentReader Tests")
-class WebContentReaderTest {
+class WebContentReaderTest extends BaseTest {
     private AutoCloseable closeable;
 
     @Autowired

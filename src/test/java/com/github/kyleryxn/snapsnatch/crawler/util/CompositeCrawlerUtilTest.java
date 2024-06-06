@@ -1,22 +1,19 @@
 package com.github.kyleryxn.snapsnatch.crawler.util;
 
+import com.github.kyleryxn.snapsnatch.BaseTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
-@ActiveProfiles("ci")
 @DisplayName("CompositeCrawlerUtil Tests")
-class CompositeCrawlerUtilTest {
+class CompositeCrawlerUtilTest extends BaseTest {
 
     @Autowired
     private CompositeCrawlerUtil compositeCrawlerUtil;

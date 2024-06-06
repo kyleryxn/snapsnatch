@@ -1,5 +1,6 @@
 package com.github.kyleryxn.snapsnatch.crawler.http;
 
+import com.github.kyleryxn.snapsnatch.BaseTest;
 import com.github.kyleryxn.snapsnatch.crawler.content.PageContent;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.core5.http.HttpEntity;
@@ -10,21 +11,16 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
 
-@SpringBootTest
-@ActiveProfiles("ci")
 @DisplayName("PageContentResponseHandler Tests")
-class PageContentResponseHandlerTest {
-
+class PageContentResponseHandlerTest extends BaseTest {
     private AutoCloseable closeable;
 
     @Autowired
