@@ -1,20 +1,17 @@
 package com.github.kyleryxn.snapsnatch.image.factory;
 
+import com.github.kyleryxn.snapsnatch.BaseTest;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-@SpringBootTest
-@ActiveProfiles("ci")
 @DisplayName("ImageFactoryUtil Tests")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class ImageFactoryUtilTest {
+class ImageFactoryUtilTest extends BaseTest {
     private String tag;
     private Element element;
 

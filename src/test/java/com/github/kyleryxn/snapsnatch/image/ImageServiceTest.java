@@ -1,5 +1,6 @@
 package com.github.kyleryxn.snapsnatch.image;
 
+import com.github.kyleryxn.snapsnatch.BaseTest;
 import com.github.kyleryxn.snapsnatch.image.model.Image;
 import org.jsoup.nodes.Attributes;
 import org.jsoup.nodes.Element;
@@ -9,15 +10,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
-@ActiveProfiles("ci")
 @DisplayName("ImageService Tests")
-class ImageServiceTest {
+class ImageServiceTest extends BaseTest {
     private Attributes attributes;
     private Element element;
 
