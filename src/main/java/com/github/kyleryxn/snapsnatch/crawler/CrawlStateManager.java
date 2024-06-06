@@ -37,6 +37,8 @@ class CrawlStateManager implements ICrawlStateManager {
         contentTypeDistribution.clear();
     }
 
+    // This method is used to visit a page and add it to the visited map
+    // If the page has already been visited, the method will return false
     @Override
     public boolean visitPage(String url) {
         return visited.putIfAbsent(url, true) == null;
